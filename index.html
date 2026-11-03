@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 Logarithm Properties - رياضيات 11 متقدم | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي عن تطبيق خصائص اللوغاريتمات - رياضيات 11 متقدم">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+body.en-mode { font-family: 'Inter', sans-serif; direction: ltr; }
+.arabic-math { font-family: 'Amiri', 'Cairo', serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch { position: fixed; top: 16px; left: 16px; z-index: 100; background: white; padding: 6px; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px; border: 2px solid #d97706; }
+body.en-mode .lang-switch { left: auto; right: 16px; }
+.lang-btn { padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s; border: none; font-size: 0.875rem; background: transparent; color: #6b7280; }
+.lang-btn.active { background: #d97706; color: white; box-shadow: 0 2px 6px rgba(217,119,6,0.4); }
+.shuffle-badge { display: inline-block; background: linear-gradient(135deg, #d97706, #b45309); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-right: 8px; }
+body.en-mode .shuffle-badge { margin-right: 0; margin-left: 8px; }
+.math-display { display: inline-block; direction: ltr; font-family: 'Amiri', serif; font-size: 1.1em; padding: 2px 6px; background: #fef3c7; border-radius: 4px; margin: 2px; color: #92400e; font-weight: 600; }
+.save-indicator { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: #10b981; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+body.en-mode .save-indicator { left: auto; right: 20px; }
+.save-indicator.show { opacity: 1; }
+.formula-box { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 12px; margin: 10px 0; font-family: 'Amiri', serif; direction: ltr; text-align: center; }
+.svg-graph { display: block; margin: 12px auto; background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 8px; max-width: 100%; }
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; }
+.module-1 { background: #fef3c7; color: #92400e; }
+.module-2 { background: #dbeafe; color: #1e40af; }
+.module-3 { background: #fce7f3; color: #9f1239; }
+.module-4 { background: #ecfdf5; color: #065f46; }
+.module-5 { background: #ede9fe; color: #5b21b6; }
+.module-6 { background: #fee2e2; color: #991b1b; }
+</style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator">💾 <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-lg inline-block border-2 border-amber-100">
+<span class="text-gray-600 ml-2">⏰ <span data-ar="الوقت المتبقي:" data-en="Time Left:">الوقت المتبقي:</span></span>
+<span id="timer" class="text-2xl font-bold text-amber-700 font-mono">75:00</span>
+<span class="shuffle-badge">📐 <span data-ar="خصائص اللوغاريتمات" data-en="Logarithm Properties">خصائص اللوغاريتمات</span> - 30 <span data-ar="سؤال" data-en="Questions">سؤال</span></span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-amber-700 hover:bg-amber-800 text-white px-5 py-2 rounded-xl font-medium transition shadow">👀 <span data-ar="إظهار/إخفاء الإجابات" data-en="Show/Hide Answers">إظهار/إخفاء الإجابات</span></button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow">🖨️ <span data-ar="طباعة" data-en="Print">طباعة</span></button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-amber-700 to-orange-600 hover:from-amber-800 hover:to-orange-700 text-white px-5 py-2 rounded-xl font-medium transition shadow">🔄 <span data-ar="أسئلة جديدة" data-en="New Questions">أسئلة جديدة</span></button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow">🗑️ <span data-ar="مسح التقدم" data-en="Clear Progress">مسح التقدم</span></button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-8 rounded-3xl shadow-2xl mb-8 border-4 border-amber-500">
+<div class="text-center">
+<div class="inline-block bg-amber-700 text-white px-6 py-2 rounded-full text-sm font-bold mb-4">MATH 11 ADVANCED - QUESTION 9</div>
+<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">📐 <span data-ar="تطبيق خصائص اللوغاريتمات" data-en="Applying Logarithm Properties">تطبيق خصائص اللوغاريتمات</span></h1>
+<h2 class="text-xl text-amber-700 font-semibold mb-2"><span data-ar="رياضيات 11 متقدم - تمارين 29-38 (صفحة 103)" data-en="Grade 11 Advanced - Exercises 29-38 (Page 103)">رياضيات 11 متقدم - تمارين 29-38 (صفحة 103)</span></h2>
+<p class="text-gray-600 mb-4"><span data-ar="Expanding Logarithmic Expressions Using Properties" data-en="Expanding Logarithmic Expressions Using Properties">Expanding Logarithmic Expressions Using Properties</span></p>
+<p class="text-sm text-green-600 font-semibold">💾 <span data-ar="يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام" data-en="Your progress is auto-saved - 30 questions in 6 sections">يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام</span></p>
+</div>
+<div class="mt-6 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span>📅 <span data-ar="التاريخ:" data-en="Date:">التاريخ:</span> <input type="text" id="examDate" class="border-b-2 border-amber-300 bg-transparent w-32 text-center"></span>
+<span>😊 <span data-ar="الاسم:" data-en="Name:">الاسم:</span> <input type="text" id="studentName" class="border-b-2 border-amber-300 bg-transparent w-40 text-center" data-placeholder-ar="اكتب اسمك" data-placeholder-en="Your name" placeholder="اكتب اسمك"></span>
+<span>🏫 <span data-ar="الشعبة:" data-en="Class:">الشعبة:</span> <input type="text" id="studentClass" class="border-b-2 border-amber-300 bg-transparent w-32 text-center" data-placeholder-ar="الشعبة" data-placeholder-en="Class" placeholder="الشعبة"></span>
+<span>⏰ <span data-ar="المدة: 75 دقيقة" data-en="Duration: 75 min">المدة: 75 دقيقة</span></span>
+<span>📊 <span data-ar="المجموع: 100 درجة" data-en="Total: 100 points">المجموع: 100 درجة</span></span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-lg border-2 border-amber-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-amber-800 text-center">📐 <span data-ar="خصائص اللوغاريتمات الأساسية" data-en="Key Logarithm Properties">خصائص اللوغاريتمات الأساسية</span></h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box">
+<strong><span data-ar="خاصية الضرب:" data-en="Product Rule:">خاصية الضرب:</span></strong><br>
+<span class="math-display">log_b(mn) = log_b(m) + log_b(n)</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="خاصية القسمة:" data-en="Quotient Rule:">خاصية القسمة:</span></strong><br>
+<span class="math-display">log_b(m/n) = log_b(m) - log_b(n)</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="خاصية القوة:" data-en="Power Rule:">خاصية القوة:</span></strong><br>
+<span class="math-display">log_b(mⁿ) = n·log_b(m)</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="الجذر التربيعي:" data-en="Square Root:">الجذر التربيعي:</span></strong><br>
+<span class="math-display">log_b(√m) = (1/2)log_b(m)</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="الجذر التكعيبي:" data-en="Cube Root:">الجذر التكعيبي:</span></strong><br>
+<span class="math-display">log_b(∛m) = (1/3)log_b(m)</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="اللوغاريتم الطبيعي:" data-en="Natural Log:">اللوغاريتم الطبيعي:</span></strong><br>
+<span class="math-display">ln(x) = log_e(x)</span>
+</div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-amber-700 to-orange-600 hover:from-amber-800 hover:to-orange-700 text-white text-lg px-12 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105">🎯 <span data-ar="صحح إجاباتي!" data-en="Grade My Exam!">صحح إجاباتي!</span></button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-3xl shadow-2xl border-4 border-amber-500 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">🏆 <span data-ar="نتيجتك يا بطل!" data-en="Your Result, Champion!">نتيجتك يا بطل!</span> 🏆</h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-amber-50 p-4 rounded-xl text-center"><p>😊 <span data-ar="الاسم" data-en="Name">الاسم</span></p><p id="res-name" class="font-bold text-xl text-amber-700">-</p></div>
+<div class="bg-orange-50 p-4 rounded-xl text-center"><p>📅 <span data-ar="التاريخ" data-en="Date">التاريخ</span></p><p id="res-date" class="font-bold text-xl text-orange-700">-</p></div>
+<div class="bg-amber-50 p-4 rounded-xl text-center"><p>🌟 <span data-ar="المجموع" data-en="Total">المجموع</span></p><p id="res-total" class="font-bold text-3xl text-amber-700">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-amber-700 mt-2">0%</p>
+<p class="text-sm text-gray-500"><span data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</span></p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800">📊 <span data-ar="أداؤك في كل قسم:" data-en="Your Performance by Section:">أداؤك في كل قسم:</span></h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-amber-700 to-orange-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition">📧 <span data-ar="أرسل النتيجة للمعلم" data-en="Send Result to Teacher">أرسل النتيجة للمعلم</span></button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© Logarithm Properties - Grade 11 Advanced | Mr. Mohammed Hesham 📐
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'log_properties_grade11_v1';
+const TOTAL_TIME = 4500;
+const TOTAL_QUESTIONS = 30;
+const TOTAL_SECTIONS = 6;
+const QUESTIONS_PER_SECTION = 5;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+let examData;
+let correctAnswersMap = {};
+let rng = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('Save error:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector('input[name="q'+i+'"]:checked');
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector('input[name="q'+idx+'"][value="'+val+'"]');
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '⚠️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG DIAGRAMS - ACCURATE LOG PROPERTIES VISUALS ====================
+const svgGraphs = {
+    log_properties: `<svg class="svg-graph" width="450" height="300" viewBox="0 0 450 300" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="290" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📐 خصائص اللوغاريتمات - Log Properties</text>
+        <rect x="20" y="45" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="65" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Product: log_b(mn) = log_b(m) + log_b(n)</text>
+        <text x="220" y="82" text-anchor="middle" font-size="10" fill="#92400e">Example: log(6x) = log(6) + log(x)</text>
+        <rect x="20" y="100" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="120" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Quotient: log_b(m/n) = log_b(m) - log_b(n)</text>
+        <text x="220" y="137" text-anchor="middle" font-size="10" fill="#92400e">Example: log(x/y) = log(x) - log(y)</text>
+        <rect x="20" y="155" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="175" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Power: log_b(mⁿ) = n·log_b(m)</text>
+        <text x="220" y="192" text-anchor="middle" font-size="10" fill="#92400e">Example: log(x³) = 3·log(x)</text>
+        <rect x="20" y="210" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="230" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Root: log_b(ⁿ√m) = (1/n)·log_b(m)</text>
+        <text x="220" y="247" text-anchor="middle" font-size="10" fill="#92400e">Example: log(√x) = (1/2)log(x)</text>
+        <rect x="20" y="265" width="400" height="25" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="282" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Apply in order: Quotient → Product → Power → Root</text>
+    </svg>`,
+    
+    example_29: `<svg class="svg-graph" width="500" height="280" viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="270" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">📝 تمرين 29: log₉(6x³y⁵z)</text>
+        <rect x="20" y="45" width="460" height="50" rx="6" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">Step 1: Apply Product Rule (all multiplied)</text>
+        <text x="250" y="85" text-anchor="middle" font-size="11" fill="#1e40af">= log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</text>
+        <rect x="20" y="105" width="460" height="50" rx="6" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">Step 2: Apply Power Rule</text>
+        <text x="250" y="145" text-anchor="middle" font-size="11" fill="#1e40af">= log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</text>
+        <rect x="20" y="165" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="185" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="205" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</text>
+        <rect x="20" y="225" width="460" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="245" text-anchor="middle" font-size="10" fill="#92400e">Note: 6 = 2·3, so log₉(6) = log₉(2) + log₉(3) if needed</text>
+        <text x="250" y="262" text-anchor="middle" font-size="10" fill="#92400e">But usually we leave log₉(6) as is</text>
+    </svg>`,
+    
+    example_30: `<svg class="svg-graph" width="500" height="320" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="310" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">📝 تمرين 30: ln(x⁷/√(x+2)) - Example 3</text>
+        <rect x="20" y="45" width="460" height="45" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 1: Quotient Rule (division)</text>
+        <text x="250" y="82" text-anchor="middle" font-size="11" fill="#9f1239">= ln(x⁷) - ln(√(x+2))</text>
+        <rect x="20" y="100" width="460" height="45" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="120" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 2: Power Rule on x⁷</text>
+        <text x="250" y="137" text-anchor="middle" font-size="11" fill="#9f1239">ln(x⁷) = 7ln(x)</text>
+        <rect x="20" y="155" width="460" height="45" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="175" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 3: Root Rule on √(x+2)</text>
+        <text x="250" y="192" text-anchor="middle" font-size="11" fill="#9f1239">ln(√(x+2)) = ln((x+2)^(1/2)) = (1/2)ln(x+2)</text>
+        <rect x="20" y="210" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="230" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="250" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">7ln(x) - (1/2)ln(x+2)</text>
+        <rect x="20" y="270" width="460" height="35" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="292" text-anchor="middle" font-size="10" fill="#92400e">Key: √(x+2) = (x+2)^(1/2), so ln(√(x+2)) = (1/2)ln(x+2)</text>
+    </svg>`,
+    
+    example_31: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="330" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">📝 تمرين 31: log₃(p²q/∛(3q-1))</text>
+        <rect x="20" y="45" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 1: Quotient Rule</text>
+        <text x="250" y="82" text-anchor="middle" font-size="11" fill="#065f46">= log₃(p²q) - log₃(∛(3q-1))</text>
+        <rect x="20" y="100" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="120" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 2: Product Rule on numerator</text>
+        <text x="250" y="137" text-anchor="middle" font-size="11" fill="#065f46">log₃(p²q) = log₃(p²) + log₃(q)</text>
+        <rect x="20" y="155" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="175" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 3: Power Rule on p²</text>
+        <text x="250" y="192" text-anchor="middle" font-size="11" fill="#065f46">log₃(p²) = 2log₃(p)</text>
+        <rect x="20" y="210" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="230" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 4: Root Rule on ∛(3q-1)</text>
+        <text x="250" y="247" text-anchor="middle" font-size="11" fill="#065f46">log₃(∛(3q-1)) = (1/3)log₃(3q-1)</text>
+        <rect x="20" y="265" width="460" height="55" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="285" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="305" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</text>
+    </svg>`,
+    
+    example_37: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="330" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold">📝 تمرين 37: ln(3a⁴b⁷c/√(b-9))</text>
+        <rect x="20" y="45" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 1: Quotient Rule</text>
+        <text x="250" y="82" text-anchor="middle" font-size="11" fill="#5b21b6">= ln(3a⁴b⁷c) - ln(√(b-9))</text>
+        <rect x="20" y="100" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="120" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 2: Product Rule on numerator</text>
+        <text x="250" y="137" text-anchor="middle" font-size="11" fill="#5b21b6">ln(3a⁴b⁷c) = ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</text>
+        <rect x="20" y="155" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="175" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 3: Power Rule</text>
+        <text x="250" y="192" text-anchor="middle" font-size="11" fill="#5b21b6">ln(a⁴) = 4ln(a), ln(b⁷) = 7ln(b)</text>
+        <rect x="20" y="210" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="230" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 4: Root Rule on denominator</text>
+        <text x="250" y="247" text-anchor="middle" font-size="11" fill="#5b21b6">ln(√(b-9)) = (1/2)ln(b-9)</text>
+        <rect x="20" y="265" width="460" height="55" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="285" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="305" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</text>
+    </svg>`,
+    
+    example_38: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="330" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#991b1b" font-weight="bold">📝 تمرين 38: log₂((3x+2)/∛(1-5x))</text>
+        <rect x="20" y="45" width="460" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">Step 1: Quotient Rule</text>
+        <text x="250" y="85" text-anchor="middle" font-size="11" fill="#991b1b">= log₂(3x+2) - log₂(∛(1-5x))</text>
+        <rect x="20" y="105" width="460" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">Step 2: Root Rule on ∛(1-5x)</text>
+        <text x="250" y="145" text-anchor="middle" font-size="11" fill="#991b1b">∛(1-5x) = (1-5x)^(1/3)</text>
+        <text x="250" y="160" text-anchor="middle" font-size="11" fill="#991b1b">log₂(∛(1-5x)) = (1/3)log₂(1-5x)</text>
+        <rect x="20" y="175" width="460" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+        <text x="250" y="195" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">Note: 3x+2 cannot be split (not a product)</text>
+        <text x="250" y="212" text-anchor="middle" font-size="10" fill="#991b1b">log₂(3x+2) stays as is (sum inside log)</text>
+        <rect x="20" y="235" width="460" height="55" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="255" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="275" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">log₂(3x+2) - (1/3)log₂(1-5x)</text>
+        <text x="250" y="295" text-anchor="middle" font-size="10" fill="#92400e">Key: (3x+2) is a SUM, not a product - cannot expand further!</text>
+    </svg>`,
+    
+    expansion_order: `<svg class="svg-graph" width="450" height="300" viewBox="0 0 450 300" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="290" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📋 ترتيب التوسيع - Expansion Order</text>
+        <rect x="20" y="45" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="65" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">1. Quotient Rule (if division)</text>
+        <text x="220" y="82" text-anchor="middle" font-size="10" fill="#92400e">log(a/b) = log(a) - log(b)</text>
+        <rect x="20" y="100" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="120" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">2. Product Rule (if multiplication)</text>
+        <text x="220" y="137" text-anchor="middle" font-size="10" fill="#92400e">log(ab) = log(a) + log(b)</text>
+        <rect x="20" y="155" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="175" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">3. Power Rule (if exponent)</text>
+        <text x="220" y="192" text-anchor="middle" font-size="10" fill="#92400e">log(aⁿ) = n·log(a)</text>
+        <rect x="20" y="210" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="230" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">4. Root Rule (if radical)</text>
+        <text x="220" y="247" text-anchor="middle" font-size="10" fill="#92400e">log(ⁿ√a) = (1/n)·log(a)</text>
+        <rect x="20" y="265" width="400" height="25" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="282" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Always work from outside to inside!</text>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 30 QUESTIONS ====================
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 القسم 1: تمرين 29 - log₉(6x³y⁵z) (Q1-Q5)', en: '🔹 Section 1: Exercise 29 - log₉(6x³y⁵z) (Q1-Q5)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 29:</strong> log₉(6x³y⁵z). ما الخطوة الأولى للتوسيع؟', en: '<strong>Exercise 29:</strong> log₉(6x³y⁵z). What is the first step to expand?' },
+                    svg: svgGraphs.example_29,
+                    options: [
+                        { ar: 'تطبيق خاصية الضرب: فصل العوامل', en: 'Apply product rule: separate factors' },
+                        { ar: 'تطبيق خاصية القسمة', en: 'Apply quotient rule' },
+                        { ar: 'تطبيق خاصية القوة', en: 'Apply power rule' },
+                        { ar: 'تطبيق خاصية الجذر', en: 'Apply root rule' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'جميع العوامل مضروبة، إذن نطبق خاصية الضرب أولاً', en: 'All factors are multiplied, so apply product rule first' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 29:</strong> ما التوسيع الصحيح لـ log₉(6x³y⁵z)؟', en: '<strong>Exercise 29:</strong> What is the correct expansion of log₉(6x³y⁵z)?' },
+                    options: [
+                        { ar: '<span class="math-display">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</span>', en: '<span class="math-display">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</span>' },
+                        { ar: '<span class="math-display">log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</span>', en: '<span class="math-display">log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</span>' },
+                        { ar: '<span class="math-display">log₉(6) · 3log₉(x) · 5log₉(y) · log₉(z)</span>', en: '<span class="math-display">log₉(6) · 3log₉(x) · 5log₉(y) · log₉(z)</span>' },
+                        { ar: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>', en: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z) = log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)', en: 'log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 29:</strong> ما معامل log₉(x) في التوسيع النهائي؟', en: '<strong>Exercise 29:</strong> What is the coefficient of log₉(x) in the final expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">5</span>', en: '<span class="math-display">5</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">6</span>', en: '<span class="math-display">6</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'من x³، باستخدام خاصية القوة: 3log₉(x)', en: 'From x³, using power rule: 3log₉(x)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 29:</strong> ما معامل log₉(y) في التوسيع النهائي؟', en: '<strong>Exercise 29:</strong> What is the coefficient of log₉(y) in the final expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">5</span>', en: '<span class="math-display">5</span>' },
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">6</span>', en: '<span class="math-display">6</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'من y⁵، باستخدام خاصية القوة: 5log₉(y)', en: 'From y⁵, using power rule: 5log₉(y)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 29:</strong> هل يمكن توسيع log₉(6) أكثر؟', en: '<strong>Exercise 29:</strong> Can log₉(6) be expanded further?' },
+                    options: [
+                        { ar: 'نعم: log₉(2) + log₉(3) لأن 6 = 2×3', en: 'Yes: log₉(2) + log₉(3) because 6 = 2×3' },
+                        { ar: 'لا، 6 عدد أولي', en: 'No, 6 is prime' },
+                        { ar: 'نعم: 2log₉(3)', en: 'Yes: 2log₉(3)' },
+                        { ar: 'نعم: log₉(6) = 6', en: 'Yes: log₉(6) = 6' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، 6 = 2×3، إذن log₉(6) = log₉(2) + log₉(3)', en: 'Yes, 6 = 2×3, so log₉(6) = log₉(2) + log₉(3)' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 القسم 2: تمرين 30 - ln(x⁷/√(x+2)) (Q6-Q10)', en: '🔹 Section 2: Exercise 30 - ln(x⁷/√(x+2)) (Q6-Q10)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 30:</strong> ln(x⁷/√(x+2)). ما الخطوة الأولى؟', en: '<strong>Exercise 30:</strong> ln(x⁷/√(x+2)). What is the first step?' },
+                    svg: svgGraphs.example_30,
+                    options: [
+                        { ar: 'خاصية القسمة: ln(x⁷) - ln(√(x+2))', en: 'Quotient rule: ln(x⁷) - ln(√(x+2))' },
+                        { ar: 'خاصية الضرب', en: 'Product rule' },
+                        { ar: 'خاصية القوة مباشرة', en: 'Power rule directly' },
+                        { ar: 'خاصية الجذر مباشرة', en: 'Root rule directly' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'هناك قسمة، إذن نطبق خاصية القسمة أولاً', en: 'There is division, so apply quotient rule first' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 30:</strong> ما توسيع ln(x⁷)؟', en: '<strong>Exercise 30:</strong> What is the expansion of ln(x⁷)?' },
+                    options: [
+                        { ar: '<span class="math-display">7ln(x)</span>', en: '<span class="math-display">7ln(x)</span>' },
+                        { ar: '<span class="math-display">ln(7x)</span>', en: '<span class="math-display">ln(7x)</span>' },
+                        { ar: '<span class="math-display">ln(x) + 7</span>', en: '<span class="math-display">ln(x) + 7</span>' },
+                        { ar: '<span class="math-display">7 + ln(x)</span>', en: '<span class="math-display">7 + ln(x)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'باستخدام خاصية القوة: ln(x⁷) = 7ln(x)', en: 'Using power rule: ln(x⁷) = 7ln(x)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 30:</strong> ما توسيع ln(√(x+2))؟', en: '<strong>Exercise 30:</strong> What is the expansion of ln(√(x+2))?' },
+                    options: [
+                        { ar: '<span class="math-display">(1/2)ln(x+2)</span>', en: '<span class="math-display">(1/2)ln(x+2)</span>' },
+                        { ar: '<span class="math-display">ln(x+2)/2</span> (نفس الإجابة)', en: '<span class="math-display">ln(x+2)/2</span> (same answer)' },
+                        { ar: '<span class="math-display">2ln(x+2)</span>', en: '<span class="math-display">2ln(x+2)</span>' },
+                        { ar: '<span class="math-display">ln(x) + ln(2)</span>', en: '<span class="math-display">ln(x) + ln(2)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '√(x+2) = (x+2)^(1/2)، إذن ln(√(x+2)) = (1/2)ln(x+2)', en: '√(x+2) = (x+2)^(1/2), so ln(√(x+2)) = (1/2)ln(x+2)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 30:</strong> ما التوسيع النهائي الصحيح؟', en: '<strong>Exercise 30:</strong> What is the correct final expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">7ln(x) - (1/2)ln(x+2)</span>', en: '<span class="math-display">7ln(x) - (1/2)ln(x+2)</span>' },
+                        { ar: '<span class="math-display">7ln(x) + (1/2)ln(x+2)</span>', en: '<span class="math-display">7ln(x) + (1/2)ln(x+2)</span>' },
+                        { ar: '<span class="math-display">ln(x⁷) - ln(x+2)</span>', en: '<span class="math-display">ln(x⁷) - ln(x+2)</span>' },
+                        { ar: '<span class="math-display">7ln(x) - 2ln(x+2)</span>', en: '<span class="math-display">7ln(x) - 2ln(x+2)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '7ln(x) - (1/2)ln(x+2)', en: '7ln(x) - (1/2)ln(x+2)' }
+                },
+                {
+                    q: { ar: '<strong>س10:</strong> لماذا لا يمكننا توسيع ln(x+2) أكثر؟', en: '<strong>Q10:</strong> Why can\'t we expand ln(x+2) further?' },
+                    options: [
+                        { ar: 'لأن x+2 مجموع وليس حاصل ضرب', en: 'Because x+2 is a sum, not a product' },
+                        { ar: 'لأن ln لا يعمل على المجاميع', en: 'Because ln doesn\'t work on sums' },
+                        { ar: 'لأن x+2 = 2x', en: 'Because x+2 = 2x' },
+                        { ar: 'يمكن توسيعه إلى ln(x) + ln(2)', en: 'It can be expanded to ln(x) + ln(2)' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ln(x+2) لا يمكن توسيعه لأن x+2 مجموع وليس حاصل ضرب. ln(a+b) ≠ ln(a) + ln(b)', en: 'ln(x+2) cannot be expanded because x+2 is a sum. ln(a+b) ≠ ln(a) + ln(b)' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 القسم 3: تمارين 31-34 (Q11-Q15)', en: '🔹 Section 3: Exercises 31-34 (Q11-Q15)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 31:</strong> log₃(p²q/∛(3q-1)). ما التوسيع الصحيح؟', en: '<strong>Exercise 31:</strong> log₃(p²q/∛(3q-1)). What is the correct expansion?' },
+                    svg: svgGraphs.example_31,
+                    options: [
+                        { ar: '<span class="math-display">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</span>', en: '<span class="math-display">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</span>' },
+                        { ar: '<span class="math-display">2log₃(p) + log₃(q) - 3log₃(3q-1)</span>', en: '<span class="math-display">2log₃(p) + log₃(q) - 3log₃(3q-1)</span>' },
+                        { ar: '<span class="math-display">log₃(p²) + log₃(q) - log₃(3q-1)</span>', en: '<span class="math-display">log₃(p²) + log₃(q) - log₃(3q-1)</span>' },
+                        { ar: '<span class="math-display">2log₃(p) · log₃(q) / (1/3)log₃(3q-1)</span>', en: '<span class="math-display">2log₃(p) · log₃(q) / (1/3)log₃(3q-1)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₃(p²) + log₃(q) - log₃(∛(3q-1)) = 2log₃(p) + log₃(q) - (1/3)log₃(3q-1)', en: 'log₃(p²) + log₃(q) - log₃(∛(3q-1)) = 2log₃(p) + log₃(q) - (1/3)log₃(3q-1)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 32:</strong> ln(4df⁵/√(1-3d)). ما التوسيع الصحيح؟', en: '<strong>Exercise 32:</strong> ln(4df⁵/√(1-3d)). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)</span>', en: '<span class="math-display">ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)</span>' },
+                        { ar: '<span class="math-display">ln(4) + ln(d) + 5ln(f) + (1/2)ln(1-3d)</span>', en: '<span class="math-display">ln(4) + ln(d) + 5ln(f) + (1/2)ln(1-3d)</span>' },
+                        { ar: '<span class="math-display">ln(4df⁵) - ln(1-3d)</span>', en: '<span class="math-display">ln(4df⁵) - ln(1-3d)</span>' },
+                        { ar: '<span class="math-display">4ln(d) + 5ln(f) - 2ln(1-3d)</span>', en: '<span class="math-display">4ln(d) + 5ln(f) - 2ln(1-3d)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ln(4) + ln(d) + ln(f⁵) - ln(√(1-3d)) = ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)', en: 'ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 33:</strong> log₁₁(ab⁻⁴c¹²d⁷). ما التوسيع الصحيح؟', en: '<strong>Exercise 33:</strong> log₁₁(ab⁻⁴c¹²d⁷). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">log₁₁(a) - 4log₁₁(b) + 12log₁₁(c) + 7log₁₁(d)</span>', en: '<span class="math-display">log₁₁(a) - 4log₁₁(b) + 12log₁₁(c) + 7log₁₁(d)</span>' },
+                        { ar: '<span class="math-display">log₁₁(a) + 4log₁₁(b) + 12log₁₁(c) + 7log₁₁(d)</span>', en: '<span class="math-display">log₁₁(a) + 4log₁₁(b) + 12log₁₁(c) + 7log₁₁(d)</span>' },
+                        { ar: '<span class="math-display">log₁₁(a) - 4log₁₁(b) - 12log₁₁(c) - 7log₁₁(d)</span>', en: '<span class="math-display">log₁₁(a) - 4log₁₁(b) - 12log₁₁(c) - 7log₁₁(d)</span>' },
+                        { ar: '<span class="math-display">log₁₁(a) · (-4)log₁₁(b) · 12log₁₁(c) · 7log₁₁(d)</span>', en: '<span class="math-display">log₁₁(a) · (-4)log₁₁(b) · 12log₁₁(c) · 7log₁₁(d)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₁₁(a) + log₁₁(b⁻⁴) + log₁₁(c¹²) + log₁₁(d⁷) = log₁₁(a) - 4log₁₁(b) + 12log₁₁(c) + 7log₁₁(d)', en: 'log₁₁(a) - 4log₁₁(b) + 12log₁₁(c) + 7log₁₁(d)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 34:</strong> log₇(h²j¹¹k⁻⁵). ما التوسيع الصحيح؟', en: '<strong>Exercise 34:</strong> log₇(h²j¹¹k⁻⁵). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">2log₇(h) + 11log₇(j) - 5log₇(k)</span>', en: '<span class="math-display">2log₇(h) + 11log₇(j) - 5log₇(k)</span>' },
+                        { ar: '<span class="math-display">2log₇(h) + 11log₇(j) + 5log₇(k)</span>', en: '<span class="math-display">2log₇(h) + 11log₇(j) + 5log₇(k)</span>' },
+                        { ar: '<span class="math-display">log₇(h²) + log₇(j¹¹) + log₇(k⁻⁵)</span>', en: '<span class="math-display">log₇(h²) + log₇(j¹¹) + log₇(k⁻⁵)</span>' },
+                        { ar: '<span class="math-display">2log₇(h) · 11log₇(j) · (-5)log₇(k)</span>', en: '<span class="math-display">2log₇(h) · 11log₇(j) · (-5)log₇(k)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₇(h²) + log₇(j¹¹) + log₇(k⁻⁵) = 2log₇(h) + 11log₇(j) - 5log₇(k)', en: '2log₇(h) + 11log₇(j) - 5log₇(k)' }
+                },
+                {
+                    q: { ar: '<strong>س15:</strong> في log₇(k⁻⁵)، ما المعامل الصحيح؟', en: '<strong>Q15:</strong> In log₇(k⁻⁵), what is the correct coefficient?' },
+                    options: [
+                        { ar: '<span class="math-display">-5</span>', en: '<span class="math-display">-5</span>' },
+                        { ar: '<span class="math-display">5</span>', en: '<span class="math-display">5</span>' },
+                        { ar: '<span class="math-display">1/5</span>', en: '<span class="math-display">1/5</span>' },
+                        { ar: '<span class="math-display">-1/5</span>', en: '<span class="math-display">-1/5</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₇(k⁻⁵) = -5log₇(k) (الأس يصبح معامل)', en: 'log₇(k⁻⁵) = -5log₇(k) (exponent becomes coefficient)' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 القسم 4: تمارين 35-36 (Q16-Q20)', en: '🔹 Section 4: Exercises 35-36 (Q16-Q20)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 35:</strong> log₄(10t²uv⁻³). ما التوسيع الصحيح؟', en: '<strong>Exercise 35:</strong> log₄(10t²uv⁻³). What is the correct expansion?' },
+                    svg: svgGraphs.log_properties,
+                    options: [
+                        { ar: '<span class="math-display">log₄(10) + 2log₄(t) + log₄(u) - 3log₄(v)</span>', en: '<span class="math-display">log₄(10) + 2log₄(t) + log₄(u) - 3log₄(v)</span>' },
+                        { ar: '<span class="math-display">log₄(10) + 2log₄(t) + log₄(u) + 3log₄(v)</span>', en: '<span class="math-display">log₄(10) + 2log₄(t) + log₄(u) + 3log₄(v)</span>' },
+                        { ar: '<span class="math-display">log₄(10) · 2log₄(t) · log₄(u) · (-3)log₄(v)</span>', en: '<span class="math-display">log₄(10) · 2log₄(t) · log₄(u) · (-3)log₄(v)</span>' },
+                        { ar: '<span class="math-display">10log₄(t²uv⁻³)</span>', en: '<span class="math-display">10log₄(t²uv⁻³)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₄(10) + log₄(t²) + log₄(u) + log₄(v⁻³) = log₄(10) + 2log₄(t) + log₄(u) - 3log₄(v)', en: 'log₄(10) + 2log₄(t) + log₄(u) - 3log₄(v)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 35:</strong> ما معامل log₄(v) في التوسيع؟', en: '<strong>Exercise 35:</strong> What is the coefficient of log₄(v) in the expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">-3</span>', en: '<span class="math-display">-3</span>' },
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">1/3</span>', en: '<span class="math-display">1/3</span>' },
+                        { ar: '<span class="math-display">-1/3</span>', en: '<span class="math-display">-1/3</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'من v⁻³، المعامل هو -3', en: 'From v⁻³, the coefficient is -3' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 36:</strong> log₅(a⁶b⁻³c⁴). ما التوسيع الصحيح؟', en: '<strong>Exercise 36:</strong> log₅(a⁶b⁻³c⁴). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">6log₅(a) - 3log₅(b) + 4log₅(c)</span>', en: '<span class="math-display">6log₅(a) - 3log₅(b) + 4log₅(c)</span>' },
+                        { ar: '<span class="math-display">6log₅(a) + 3log₅(b) + 4log₅(c)</span>', en: '<span class="math-display">6log₅(a) + 3log₅(b) + 4log₅(c)</span>' },
+                        { ar: '<span class="math-display">log₅(a⁶) + log₅(b⁻³) + log₅(c⁴)</span>', en: '<span class="math-display">log₅(a⁶) + log₅(b⁻³) + log₅(c⁴)</span>' },
+                        { ar: '<span class="math-display">6log₅(a) · (-3)log₅(b) · 4log₅(c)</span>', en: '<span class="math-display">6log₅(a) · (-3)log₅(b) · 4log₅(c)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '6log₅(a) + (-3)log₅(b) + 4log₅(c) = 6log₅(a) - 3log₅(b) + 4log₅(c)', en: '6log₅(a) - 3log₅(b) + 4log₅(c)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 36:</strong> ما مجموع المعاملات في التوسيع؟', en: '<strong>Exercise 36:</strong> What is the sum of coefficients in the expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">7</span> (6 - 3 + 4)', en: '<span class="math-display">7</span> (6 - 3 + 4)' },
+                        { ar: '<span class="math-display">13</span>', en: '<span class="math-display">13</span>' },
+                        { ar: '<span class="math-display">-7</span>', en: '<span class="math-display">-7</span>' },
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '6 + (-3) + 4 = 7', en: '6 + (-3) + 4 = 7' }
+                },
+                {
+                    q: { ar: '<strong>س20:</strong> إذا كان log₅(b⁻³)، فما الإشارة الصحيحة؟', en: '<strong>Q20:</strong> If log₅(b⁻³), what is the correct sign?' },
+                    options: [
+                        { ar: 'سالبة: -3log₅(b)', en: 'Negative: -3log₅(b)' },
+                        { ar: 'موجبة: 3log₅(b)', en: 'Positive: 3log₅(b)' },
+                        { ar: 'كسر: (1/3)log₅(b)', en: 'Fraction: (1/3)log₅(b)' },
+                        { ar: 'صفر', en: 'Zero' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₅(b⁻³) = -3log₅(b) (الأس السالب يصبح معامل سالب)', en: 'log₅(b⁻³) = -3log₅(b) (negative exponent becomes negative coefficient)' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 القسم 5: تمرين 37 - ln(3a⁴b⁷c/√(b-9)) (Q21-Q25)', en: '🔹 Section 5: Exercise 37 - ln(3a⁴b⁷c/√(b-9)) (Q21-Q25)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 37:</strong> ln(3a⁴b⁷c/√(b-9)). ما الخطوة الأولى؟', en: '<strong>Exercise 37:</strong> ln(3a⁴b⁷c/√(b-9)). What is the first step?' },
+                    svg: svgGraphs.example_37,
+                    options: [
+                        { ar: 'خاصية القسمة: ln(3a⁴b⁷c) - ln(√(b-9))', en: 'Quotient rule: ln(3a⁴b⁷c) - ln(√(b-9))' },
+                        { ar: 'خاصية الضرب مباشرة', en: 'Product rule directly' },
+                        { ar: 'خاصية القوة مباشرة', en: 'Power rule directly' },
+                        { ar: 'خاصية الجذر مباشرة', en: 'Root rule directly' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'هناك قسمة، إذن نطبق خاصية القسمة أولاً', en: 'There is division, so apply quotient rule first' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 37:</strong> ما توسيع ln(3a⁴b⁷c)؟', en: '<strong>Exercise 37:</strong> What is the expansion of ln(3a⁴b⁷c)?' },
+                    options: [
+                        { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c)</span>' },
+                        { ar: '<span class="math-display">ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</span>', en: '<span class="math-display">ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</span>' },
+                        { ar: '<span class="math-display">3ln(a⁴b⁷c)</span>', en: '<span class="math-display">3ln(a⁴b⁷c)</span>' },
+                        { ar: '<span class="math-display">ln(3) · 4ln(a) · 7ln(b) · ln(c)</span>', en: '<span class="math-display">ln(3) · 4ln(a) · 7ln(b) · ln(c)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ln(3) + ln(a⁴) + ln(b⁷) + ln(c) = ln(3) + 4ln(a) + 7ln(b) + ln(c)', en: 'ln(3) + 4ln(a) + 7ln(b) + ln(c)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 37:</strong> ما توسيع ln(√(b-9))؟', en: '<strong>Exercise 37:</strong> What is the expansion of ln(√(b-9))?' },
+                    options: [
+                        { ar: '<span class="math-display">(1/2)ln(b-9)</span>', en: '<span class="math-display">(1/2)ln(b-9)</span>' },
+                        { ar: '<span class="math-display">2ln(b-9)</span>', en: '<span class="math-display">2ln(b-9)</span>' },
+                        { ar: '<span class="math-display">ln(b) - ln(9)</span>', en: '<span class="math-display">ln(b) - ln(9)</span>' },
+                        { ar: '<span class="math-display">(1/2)ln(b) - (1/2)ln(9)</span>', en: '<span class="math-display">(1/2)ln(b) - (1/2)ln(9)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '√(b-9) = (b-9)^(1/2)، إذن ln(√(b-9)) = (1/2)ln(b-9)', en: '√(b-9) = (b-9)^(1/2), so ln(√(b-9)) = (1/2)ln(b-9)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 37:</strong> ما التوسيع النهائي الكامل؟', en: '<strong>Exercise 37:</strong> What is the complete final expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</span>' },
+                        { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) + (1/2)ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) + (1/2)ln(b-9)</span>' },
+                        { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - 2ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - 2ln(b-9)</span>' },
+                        { ar: '<span class="math-display">3 + 4a + 7b + c - (1/2)(b-9)</span>', en: '<span class="math-display">3 + 4a + 7b + c - (1/2)(b-9)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)', en: 'ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 37:</strong> لماذا لا يمكن توسيع ln(b-9) أكثر؟', en: '<strong>Exercise 37:</strong> Why can\'t ln(b-9) be expanded further?' },
+                    options: [
+                        { ar: 'لأن b-9 طرح وليس ضرب أو قسمة', en: 'Because b-9 is subtraction, not multiplication or division' },
+                        { ar: 'لأن b-9 = 0', en: 'Because b-9 = 0' },
+                        { ar: 'لأن ln لا يعمل على الطرح', en: 'Because ln doesn\'t work on subtraction' },
+                        { ar: 'يمكن توسيعه إلى ln(b) - ln(9)', en: 'It can be expanded to ln(b) - ln(9)' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'ln(b-9) لا يمكن توسيعه لأن b-9 فرق وليس حاصل ضرب أو قسمة. ln(a-b) ≠ ln(a) - ln(b)', en: 'ln(b-9) cannot be expanded because b-9 is a difference. ln(a-b) ≠ ln(a) - ln(b)' }
+                }
+            ]
+        },
+        {
+            id: 'sec6',
+            title: { ar: '🔹 القسم 6: تمرين 38 ومسائل مشابهة (Q26-Q30)', en: '🔹 Section 6: Exercise 38 & Similar (Q26-Q30)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 38:</strong> log₂((3x+2)/∛(1-5x)). ما التوسيع الصحيح؟', en: '<strong>Exercise 38:</strong> log₂((3x+2)/∛(1-5x)). What is the correct expansion?' },
+                    svg: svgGraphs.example_38,
+                    options: [
+                        { ar: '<span class="math-display">log₂(3x+2) - (1/3)log₂(1-5x)</span>', en: '<span class="math-display">log₂(3x+2) - (1/3)log₂(1-5x)</span>' },
+                        { ar: '<span class="math-display">log₂(3x+2) - 3log₂(1-5x)</span>', en: '<span class="math-display">log₂(3x+2) - 3log₂(1-5x)</span>' },
+                        { ar: '<span class="math-display">log₂(3x) + log₂(2) - (1/3)log₂(1) - (1/3)log₂(5x)</span>', en: '<span class="math-display">log₂(3x) + log₂(2) - (1/3)log₂(1) - (1/3)log₂(5x)</span>' },
+                        { ar: '<span class="math-display">log₂(3x+2) + (1/3)log₂(1-5x)</span>', en: '<span class="math-display">log₂(3x+2) + (1/3)log₂(1-5x)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₂(3x+2) - log₂(∛(1-5x)) = log₂(3x+2) - (1/3)log₂(1-5x)', en: 'log₂(3x+2) - (1/3)log₂(1-5x)' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 38:</strong> لماذا لا يمكن توسيع log₂(3x+2) أكثر؟', en: '<strong>Exercise 38:</strong> Why can\'t log₂(3x+2) be expanded further?' },
+                    options: [
+                        { ar: 'لأن 3x+2 مجموع وليس حاصل ضرب', en: 'Because 3x+2 is a sum, not a product' },
+                        { ar: 'لأن 3x+2 = 5x', en: 'Because 3x+2 = 5x' },
+                        { ar: 'يمكن توسيعه إلى log₂(3x) + log₂(2)', en: 'It can be expanded to log₂(3x) + log₂(2)' },
+                        { ar: 'لأن الأساس 2', en: 'Because the base is 2' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '3x+2 مجموع، و log(a+b) ≠ log(a) + log(b)', en: '3x+2 is a sum, and log(a+b) ≠ log(a) + log(b)' }
+                },
+                {
+                    q: { ar: '<strong>س28:</strong> log(5x²y³). ما التوسيع الصحيح؟', en: '<strong>Q28:</strong> log(5x²y³). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">log(5) + 2log(x) + 3log(y)</span>', en: '<span class="math-display">log(5) + 2log(x) + 3log(y)</span>' },
+                        { ar: '<span class="math-display">log(5) + log(x²) + log(y³)</span>', en: '<span class="math-display">log(5) + log(x²) + log(y³)</span>' },
+                        { ar: '<span class="math-display">5log(x²y³)</span>', en: '<span class="math-display">5log(x²y³)</span>' },
+                        { ar: '<span class="math-display">log(5) · 2log(x) · 3log(y)</span>', en: '<span class="math-display">log(5) · 2log(x) · 3log(y)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log(5) + log(x²) + log(y³) = log(5) + 2log(x) + 3log(y)', en: 'log(5) + 2log(x) + 3log(y)' }
+                },
+                {
+                    q: { ar: '<strong>س29:</strong> log((x²-1)/(x+3)). ما التوسيع الصحيح؟', en: '<strong>Q29:</strong> log((x²-1)/(x+3)). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">log(x²-1) - log(x+3)</span>', en: '<span class="math-display">log(x²-1) - log(x+3)</span>' },
+                        { ar: '<span class="math-display">2log(x) - log(1) - log(x) - log(3)</span>', en: '<span class="math-display">2log(x) - log(1) - log(x) - log(3)</span>' },
+                        { ar: '<span class="math-display">log(x²) - log(1) - log(x+3)</span>', en: '<span class="math-display">log(x²) - log(1) - log(x+3)</span>' },
+                        { ar: '<span class="math-display">log(x²-1) + log(x+3)</span>', en: '<span class="math-display">log(x²-1) + log(x+3)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log(x²-1) - log(x+3) (لا يمكن توسيع أكثر لأن x²-1 و x+3 ليسا حاصل ضرب)', en: 'log(x²-1) - log(x+3) (cannot expand further because x²-1 and x+3 are not products)' }
+                },
+                {
+                    q: { ar: '<strong>س30:</strong> ln(√(x³y)). ما التوسيع الصحيح؟', en: '<strong>Q30:</strong> ln(√(x³y)). What is the correct expansion?' },
+                    options: [
+                        { ar: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>', en: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>' },
+                        { ar: '<span class="math-display">3ln(x) + ln(y)</span>', en: '<span class="math-display">3ln(x) + ln(y)</span>' },
+                        { ar: '<span class="math-display">(1/2)ln(x³) + (1/2)ln(y)</span>', en: '<span class="math-display">(1/2)ln(x³) + (1/2)ln(y)</span>' },
+                        { ar: '<span class="math-display">ln(x³) + ln(y)</span>', en: '<span class="math-display">ln(x³) + ln(y)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '√(x³y) = (x³y)^(1/2) = x^(3/2) · y^(1/2). ln(x^(3/2)) + ln(y^(1/2)) = (3/2)ln(x) + (1/2)ln(y)', en: '√(x³y) = (x³y)^(1/2). ln((x³y)^(1/2)) = (1/2)ln(x³y) = (1/2)(3ln(x) + ln(y)) = (3/2)ln(x) + (1/2)ln(y)' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? '🔄 سيتم إنشاء أسئلة جديدة ومسح إجاباتك. هل أنت متأكد؟' : '🔄 New questions will be generated. Are you sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? '🎲 تم تغيير الأسئلة! حظاً موفقاً! 🍀' : '🎲 Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+    });
+    
+    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + lang);
+    });
+    
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang];
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section, secIdx) => {
+        const badgeClass = ['module-1', 'module-2', 'module-3', 'module-4', 'module-5', 'module-6'][secIdx];
+        html += '<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-amber-100">';
+        html += '<div class="text-center mb-4"><span class="module-badge ' + badgeClass + '">' + section.title[currentLang] + '</span></div>';
+        html += '<ol class="space-y-4 text-sm">';
+        
+        section.questions.forEach((q) => {
+            html += '<li class="border-r-4 border-amber-400 pr-4 py-2" id="q-' + globalIdx + '" style="border-right: 4px solid #d97706; padding-right: 1rem;">';
+            html += '<strong class="text-amber-700">' + (globalIdx + 1) + '.</strong> ' + q.q[currentLang] + '<br>';
+            if (q.svg) html += '<div class="graph-container">' + q.svg + '</div>';
+            
+            q.options.forEach((opt, oIdx) => {
+                html += '<label class="cursor-pointer block mt-2 mr-4 hover:bg-amber-50 rounded-lg p-2 transition" style="margin-right: 1rem;">';
+                html += '<input type="radio" name="q' + globalIdx + '" value="' + String.fromCharCode(97 + oIdx) + '" class="mr-2 ml-2">';
+                html += '<span class="arabic-math">' + lbl.option[oIdx] + ') ' + opt[currentLang] + '</span>';
+                html += '</label>';
+            });
+            
+            html += '<div class="answer-box text-green-700 mt-3 font-medium ' + (answersVisible ? '' : 'hidden') + ' bg-green-50 rounded-lg p-3 border border-green-200">';
+            html += lbl.answer + ' ' + lbl.option[q.correct] + ') <span class="arabic-math">' + q.options[q.correct][currentLang] + '</span><br>';
+            html += '<span class="text-sm text-green-700 mt-2 block arabic-math">' + q.answer[currentLang] + '</span>';
+            html += '</div></li>';
+            globalIdx++;
+        });
+        
+        html += '</ol></section>';
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "⏰ انتهى الوقت!" : "⏰ Time's up!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60);
+    const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = m.toString().padStart(2,'0') + ':' + s.toString().padStart(2,'0');
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const sectionScores = new Array(TOTAL_SECTIONS).fill(0);
+    
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const sel = document.querySelector('input[name="q'+i+'"]:checked');
+        const li = document.getElementById('q-' + i);
+        if (li) {
+            const isCorrect = sel && sel.value === correctAnswersMap[i];
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+                sectionScores[Math.floor(i / QUESTIONS_PER_SECTION)]++;
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+        }
+    }
+    
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = score + ' / 100';
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'بطل' : 'Champion');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    const pc = document.getElementById('sections-performance');
+    pc.innerHTML = '';
+    examData.sections.forEach((s, idx) => {
+        pc.innerHTML += '<div class="flex justify-between items-center p-3 bg-white rounded-lg"><span class="text-gray-700">' + s.title[currentLang] + '</span><span class="font-bold text-amber-700">' + sectionScores[idx] + '/' + QUESTIONS_PER_SECTION + '</span></div>';
+    });
+    
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = score + '%';
+    
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = '🌟 ممتاز جداً!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 ممتاز!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = '🌟 Outstanding!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 Excellent!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '⏳ Sending...';
+    
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    
+    let questionsHTML = '<div style="font-family:Arial; direction:rtl;">';
+    questionsHTML += '<h2>📐 ' + (currentLang === 'ar' ? 'نتيجة امتحان خصائص اللوغاريتمات' : 'Logarithm Properties Exam Result') + '</h2>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الاسم' : 'Name') + ':</strong> ' + name + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الشعبة' : 'Class') + ':</strong> ' + studentClass + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'التاريخ' : 'Date') + ':</strong> ' + date + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الدرجة' : 'Score') + ':</strong> ' + score + ' (' + successRate + '%)</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'التقدير' : 'Grade') + ':</strong> ' + badge + '</p>';
+    questionsHTML += '<hr><h3>' + (currentLang === 'ar' ? 'تفاصيل الإجابات:' : 'Answer Details:') + '</h3><table style="width:100%; border-collapse:collapse;">';
+    questionsHTML += '<tr style="background:#d97706; color:white;"><th style="padding:8px; border:1px solid #ddd;">#</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'السؤال' : 'Question') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'إجابة الطالب' : 'Student Answer') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'الصحيحة' : 'Correct') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'النتيجة' : 'Result') + '</th></tr>';
+    
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        questionsHTML += '<tr style="background:#fef3c7;"><td colspan="5" style="padding:8px; font-weight:bold; border:1px solid #ddd;">' + section.title.ar + '</td></tr>';
+        section.questions.forEach((q) => {
+            const sel = document.querySelector('input[name="q'+globalIdx+'"]:checked');
+            const sv = sel ? sel.value : null;
+            const cv = correctAnswersMap[globalIdx];
+            const ic = sv === cv;
+            let sat = currentLang === 'ar' ? '❌ لم يجب' : '❌ No answer';
+            let sac = '#dc2626';
+            if (sv) {
+                const si = sv.charCodeAt(0) - 97;
+                sat = q.options[si][currentLang];
+                sac = ic ? '#16a34a' : '#dc2626';
+            }
+            const cat = q.options[q.correct][currentLang];
+            const rb = ic ? '#f0fdf4' : '#fef2f2';
+            questionsHTML += '<tr style="background:' + rb + ';"><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (globalIdx+1) + '</td><td style="padding:8px; border:1px solid #ddd;">' + q.q.ar + '</td><td style="padding:8px; border:1px solid #ddd; color:' + sac + ';">' + sat + '</td><td style="padding:8px; border:1px solid #ddd; color:#16a34a;">' + cat + '</td><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (ic?'✅':'❌') + '</td></tr>';
+            globalIdx++;
+        });
+    });
+    questionsHTML += '</table></div>';
+    
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: questionsHTML
+    };
+    
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' ? '✅ تم الإرسال بنجاح!' : '✅ Sent successfully!';
+            status.style.color = '#16a34a';
+            btn.textContent = currentLang === 'ar' ? '✓ تم' : '✓ Sent';
+            alert(currentLang === 'ar' ? 'تم إرسال النتيجة للمعلم بنجاح!' : 'Result sent to teacher successfully!');
+        })
+        .catch((error) => {
+            status.textContent = currentLang === 'ar' ? '❌ فشل الإرسال' : '❌ Failed to send';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 حاول مرة أخرى' : '📧 Try Again';
+            alert(currentLang === 'ar' ? 'فشل الإرسال: ' + error.text : 'Failed: ' + error.text);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed;
+        currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+    } else {
+        currentSeed = Date.now();
+    }
+    
+    document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+    document.body.classList.toggle('en-mode', currentLang === 'en');
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + currentLang);
+    });
+    
+    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + currentLang);
+    });
+    
+    prepareShuffledExam();
+    renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners();
+    setupInputListeners();
+    startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
