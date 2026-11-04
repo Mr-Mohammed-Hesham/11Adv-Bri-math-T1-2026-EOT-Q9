@@ -96,7 +96,7 @@ body.en-mode .save-indicator { left: auto; right: 20px; }
 </header>
 
 <div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-lg border-2 border-amber-200 no-print">
-<h3 class="font-bold text-lg mb-3 text-amber-800 text-center">📐 <span data-ar="خصائص اللوغاريتمات الأساسية" data-en="Key Logarithm Properties">خصائص اللوغاريتمات الأساسية</span></h3>
+<h3 class="font-bold text-lg mb-3 text-amber-800 text-center">📐 <span data-ar="خصائص اللوغاريتمات" data-en="Logarithm Properties">خصائص اللوغاريتمات</span></h3>
 <div class="grid md:grid-cols-3 gap-3 text-sm">
 <div class="formula-box">
 <strong><span data-ar="خاصية الضرب:" data-en="Product Rule:">خاصية الضرب:</span></strong><br>
@@ -111,16 +111,16 @@ body.en-mode .save-indicator { left: auto; right: 20px; }
 <span class="math-display">log_b(mⁿ) = n·log_b(m)</span>
 </div>
 <div class="formula-box">
-<strong><span data-ar="الجذر التربيعي:" data-en="Square Root:">الجذر التربيعي:</span></strong><br>
-<span class="math-display">log_b(√m) = (1/2)log_b(m)</span>
-</div>
-<div class="formula-box">
-<strong><span data-ar="الجذر التكعيبي:" data-en="Cube Root:">الجذر التكعيبي:</span></strong><br>
-<span class="math-display">log_b(∛m) = (1/3)log_b(m)</span>
+<strong><span data-ar="خاصية الجذر:" data-en="Root Rule:">خاصية الجذر:</span></strong><br>
+<span class="math-display">log_b(ⁿ√m) = (1/n)·log_b(m)</span>
 </div>
 <div class="formula-box">
 <strong><span data-ar="اللوغاريتم الطبيعي:" data-en="Natural Log:">اللوغاريتم الطبيعي:</span></strong><br>
 <span class="math-display">ln(x) = log_e(x)</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="ترتيب التوسيع:" data-en="Expansion Order:">ترتيب التوسيع:</span></strong><br>
+<span data-ar="القسمة → الضرب → القوة → الجذر" data-en="Quotient → Product → Power → Root">القسمة → الضرب → القوة → الجذر</span>
 </div>
 </div>
 </div>
@@ -257,105 +257,119 @@ function setupInputListeners() {
     });
 }
 
-// ==================== SVG DIAGRAMS ====================
+// ==================== SVG DIAGRAMS - ACCURATE LOG EXPANSION VISUALS ====================
 const svgGraphs = {
-    log_properties: `<svg class="svg-graph" width="450" height="300" viewBox="0 0 450 300" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="440" height="290" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📐 خصائص اللوغاريتمات - Log Properties</text>
-        <rect x="20" y="45" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="65" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Product: log_b(mn) = log_b(m) + log_b(n)</text>
-        <text x="220" y="82" text-anchor="middle" font-size="10" fill="#92400e">Example: log(6x) = log(6) + log(x)</text>
-        <rect x="20" y="100" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="120" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Quotient: log_b(m/n) = log_b(m) - log_b(n)</text>
-        <text x="220" y="137" text-anchor="middle" font-size="10" fill="#92400e">Example: log(x/y) = log(x) - log(y)</text>
-        <rect x="20" y="155" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="175" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Power: log_b(mⁿ) = n·log_b(m)</text>
-        <text x="220" y="192" text-anchor="middle" font-size="10" fill="#92400e">Example: log(x³) = 3·log(x)</text>
-        <rect x="20" y="210" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="230" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif" font-weight="bold">Root: log_b(ⁿ√m) = (1/n)·log_b(m)</text>
-        <text x="220" y="247" text-anchor="middle" font-size="10" fill="#92400e">Example: log(√x) = (1/2)log(x)</text>
-        <rect x="20" y="265" width="400" height="25" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="282" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Apply in order: Quotient → Product → Power → Root</text>
+    log_properties: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="330" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📐 خصائص اللوغاريتمات - Log Properties</text>
+        <rect x="20" y="45" width="220" height="60" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="130" y="65" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Product Rule:</text>
+        <text x="130" y="85" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif">log(mn) = log(m) + log(n)</text>
+        <text x="130" y="100" text-anchor="middle" font-size="9" fill="#92400e">ضرب → جمع</text>
+        <rect x="260" y="45" width="220" height="60" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="370" y="65" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Quotient Rule:</text>
+        <text x="370" y="85" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif">log(m/n) = log(m) - log(n)</text>
+        <text x="370" y="100" text-anchor="middle" font-size="9" fill="#92400e">قسمة → طرح</text>
+        <rect x="20" y="115" width="220" height="60" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="130" y="135" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Power Rule:</text>
+        <text x="130" y="155" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif">log(mⁿ) = n·log(m)</text>
+        <text x="130" y="170" text-anchor="middle" font-size="9" fill="#92400e">أس → معامل</text>
+        <rect x="260" y="115" width="220" height="60" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="370" y="135" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Root Rule:</text>
+        <text x="370" y="155" text-anchor="middle" font-size="12" fill="#92400e" font-family="'Amiri', serif">log(ⁿ√m) = (1/n)·log(m)</text>
+        <text x="370" y="170" text-anchor="middle" font-size="9" fill="#92400e">جذر → كسر</text>
+        <rect x="20" y="185" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="205" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Expansion Order (ترتيب التوسيع):</text>
+        <text x="250" y="225" text-anchor="middle" font-size="10" fill="#92400e">1. Quotient (القسمة) → 2. Product (الضرب) → 3. Power (القوة) → 4. Root (الجذر)</text>
+        <rect x="20" y="245" width="460" height="80" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="265" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">⚠️ Important Notes:</text>
+        <text x="250" y="283" text-anchor="middle" font-size="10" fill="#92400e">• log(a+b) ≠ log(a) + log(b) - لا يمكن توسيع المجموع</text>
+        <text x="250" y="298" text-anchor="middle" font-size="10" fill="#92400e">• log(a-b) ≠ log(a) - log(b) - لا يمكن توسيع الفرق</text>
+        <text x="250" y="313" text-anchor="middle" font-size="10" fill="#92400e">• ln = log_e (اللوغاريتم الطبيعي)</text>
     </svg>`,
     
-    example_29: `<svg class="svg-graph" width="500" height="280" viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="490" height="270" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    exercise29: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="330" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
         <text x="250" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">📝 تمرين 29: log₉(6x³y⁵z)</text>
         <rect x="20" y="45" width="460" height="50" rx="6" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
-        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">Step 1: Apply Product Rule (all multiplied)</text>
+        <text x="250" y="65" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">Step 1: Product Rule (all multiplied)</text>
         <text x="250" y="85" text-anchor="middle" font-size="11" fill="#1e40af">= log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</text>
         <rect x="20" y="105" width="460" height="50" rx="6" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
-        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">Step 2: Apply Power Rule</text>
+        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">Step 2: Power Rule</text>
         <text x="250" y="145" text-anchor="middle" font-size="11" fill="#1e40af">= log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</text>
         <rect x="20" y="165" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
         <text x="250" y="185" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
         <text x="250" y="205" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</text>
-        <rect x="20" y="225" width="460" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <rect x="20" y="225" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
         <text x="250" y="245" text-anchor="middle" font-size="10" fill="#92400e">Note: 6 = 2·3, so log₉(6) = log₉(2) + log₉(3) if needed</text>
         <text x="250" y="262" text-anchor="middle" font-size="10" fill="#92400e">But usually we leave log₉(6) as is</text>
+        <rect x="20" y="285" width="460" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="305" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Coefficients: 1, 3, 5, 1 (from exponents)</text>
     </svg>`,
     
-    example_30: `<svg class="svg-graph" width="500" height="320" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="490" height="310" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
-        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">📝 تمرين 30: ln(x⁷/√(x+2)) - Example 3</text>
-        <rect x="20" y="45" width="460" height="45" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+    exercise30: `<svg class="svg-graph" width="500" height="360" viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="350" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">📝 تمرين 30: ln(x⁷/∛(x+2))</text>
+        <rect x="20" y="45" width="460" height="50" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
         <text x="250" y="65" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 1: Quotient Rule (division)</text>
-        <text x="250" y="82" text-anchor="middle" font-size="11" fill="#9f1239">= ln(x⁷) - ln(√(x+2))</text>
-        <rect x="20" y="100" width="460" height="45" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
-        <text x="250" y="120" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 2: Power Rule on x⁷</text>
-        <text x="250" y="137" text-anchor="middle" font-size="11" fill="#9f1239">ln(x⁷) = 7ln(x)</text>
-        <rect x="20" y="155" width="460" height="45" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
-        <text x="250" y="175" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 3: Root Rule on √(x+2)</text>
-        <text x="250" y="192" text-anchor="middle" font-size="11" fill="#9f1239">ln(√(x+2)) = ln((x+2)^(1/2)) = (1/2)ln(x+2)</text>
-        <rect x="20" y="210" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="250" y="230" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
-        <text x="250" y="250" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">7ln(x) - (1/2)ln(x+2)</text>
-        <rect x="20" y="270" width="460" height="35" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="250" y="292" text-anchor="middle" font-size="10" fill="#92400e">Key: √(x+2) = (x+2)^(1/2), so ln(√(x+2)) = (1/2)ln(x+2)</text>
+        <text x="250" y="85" text-anchor="middle" font-size="11" fill="#9f1239">= ln(x⁷) - ln(∛(x+2))</text>
+        <rect x="20" y="105" width="460" height="50" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 2: Power Rule on x⁷</text>
+        <text x="250" y="145" text-anchor="middle" font-size="11" fill="#9f1239">ln(x⁷) = 7ln(x)</text>
+        <rect x="20" y="165" width="460" height="50" rx="6" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="250" y="185" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Step 3: Root Rule on ∛(x+2)</text>
+        <text x="250" y="205" text-anchor="middle" font-size="11" fill="#9f1239">ln(∛(x+2)) = ln((x+2)^(1/3)) = (1/3)ln(x+2)</text>
+        <rect x="20" y="225" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="245" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="265" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">7ln(x) - (1/3)ln(x+2)</text>
+        <rect x="20" y="285" width="460" height="60" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="305" text-anchor="middle" font-size="10" fill="#92400e">Key: ∛(x+2) = (x+2)^(1/3), so ln(∛(x+2)) = (1/3)ln(x+2)</text>
+        <text x="250" y="322" text-anchor="middle" font-size="10" fill="#92400e">Cannot expand ln(x+2) because it's a sum!</text>
+        <text x="250" y="338" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">ln(a+b) ≠ ln(a) + ln(b)</text>
     </svg>`,
     
-    example_31: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="490" height="330" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+    exercise31: `<svg class="svg-graph" width="500" height="380" viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="370" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
         <text x="250" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">📝 تمرين 31: log₃(p²q/∛(3q-1))</text>
-        <rect x="20" y="45" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <rect x="20" y="45" width="460" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
         <text x="250" y="65" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 1: Quotient Rule</text>
-        <text x="250" y="82" text-anchor="middle" font-size="11" fill="#065f46">= log₃(p²q) - log₃(∛(3q-1))</text>
-        <rect x="20" y="100" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
-        <text x="250" y="120" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 2: Product Rule on numerator</text>
-        <text x="250" y="137" text-anchor="middle" font-size="11" fill="#065f46">log₃(p²q) = log₃(p²) + log₃(q)</text>
-        <rect x="20" y="155" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
-        <text x="250" y="175" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 3: Power Rule on p²</text>
-        <text x="250" y="192" text-anchor="middle" font-size="11" fill="#065f46">log₃(p²) = 2log₃(p)</text>
-        <rect x="20" y="210" width="460" height="45" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
-        <text x="250" y="230" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 4: Root Rule on ∛(3q-1)</text>
-        <text x="250" y="247" text-anchor="middle" font-size="11" fill="#065f46">log₃(∛(3q-1)) = (1/3)log₃(3q-1)</text>
-        <rect x="20" y="265" width="460" height="55" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="250" y="285" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
-        <text x="250" y="305" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</text>
+        <text x="250" y="85" text-anchor="middle" font-size="11" fill="#065f46">= log₃(p²q) - log₃(∛(3q-1))</text>
+        <rect x="20" y="105" width="460" height="50" rx="6" fill="#d1fae5" stroke="#10b91" stroke-width="2"/>
+        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 2: Product Rule on numerator</text>
+        <text x="250" y="145" text-anchor="middle" font-size="11" fill="#065f46">log₃(p²q) = log₃(p²) + log₃(q)</text>
+        <rect x="20" y="165" width="460" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="185" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 3: Power Rule on p²</text>
+        <text x="250" y="205" text-anchor="middle" font-size="11" fill="#065f46">log₃(p²) = 2log₃(p)</text>
+        <rect x="20" y="225" width="460" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="250" y="245" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Step 4: Root Rule on ∛(3q-1)</text>
+        <text x="250" y="265" text-anchor="middle" font-size="11" fill="#065f46">log₃(∛(3q-1)) = (1/3)log₃(3q-1)</text>
+        <rect x="20" y="285" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="305" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="325" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</text>
     </svg>`,
     
-    example_37: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="490" height="330" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    exercise37: `<svg class="svg-graph" width="500" height="380" viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="370" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
         <text x="250" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold">📝 تمرين 37: ln(3a⁴b⁷c/√(b-9))</text>
-        <rect x="20" y="45" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <rect x="20" y="45" width="460" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
         <text x="250" y="65" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 1: Quotient Rule</text>
-        <text x="250" y="82" text-anchor="middle" font-size="11" fill="#5b21b6">= ln(3a⁴b⁷c) - ln(√(b-9))</text>
-        <rect x="20" y="100" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
-        <text x="250" y="120" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 2: Product Rule on numerator</text>
-        <text x="250" y="137" text-anchor="middle" font-size="11" fill="#5b21b6">ln(3a⁴b⁷c) = ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</text>
-        <rect x="20" y="155" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
-        <text x="250" y="175" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 3: Power Rule</text>
-        <text x="250" y="192" text-anchor="middle" font-size="11" fill="#5b21b6">ln(a⁴) = 4ln(a), ln(b⁷) = 7ln(b)</text>
-        <rect x="20" y="210" width="460" height="45" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
-        <text x="250" y="230" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 4: Root Rule on denominator</text>
-        <text x="250" y="247" text-anchor="middle" font-size="11" fill="#5b21b6">ln(√(b-9)) = (1/2)ln(b-9)</text>
-        <rect x="20" y="265" width="460" height="55" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="250" y="285" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
-        <text x="250" y="305" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</text>
+        <text x="250" y="85" text-anchor="middle" font-size="11" fill="#5b21b6">= ln(3a⁴b⁷c) - ln(√(b-9))</text>
+        <rect x="20" y="105" width="460" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="125" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 2: Product Rule on numerator</text>
+        <text x="250" y="145" text-anchor="middle" font-size="11" fill="#5b21b6">ln(3a⁴b⁷c) = ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</text>
+        <rect x="20" y="165" width="460" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="185" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 3: Power Rule</text>
+        <text x="250" y="205" text-anchor="middle" font-size="11" fill="#5b21b6">ln(a⁴) = 4ln(a), ln(b⁷) = 7ln(b)</text>
+        <rect x="20" y="225" width="460" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="250" y="245" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 4: Root Rule on denominator</text>
+        <text x="250" y="265" text-anchor="middle" font-size="11" fill="#5b21b6">ln(√(b-9)) = (1/2)ln(b-9)</text>
+        <rect x="20" y="285" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="305" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
+        <text x="250" y="325" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</text>
     </svg>`,
     
-    example_38: `<svg class="svg-graph" width="500" height="340" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="490" height="330" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    exercise38: `<svg class="svg-graph" width="500" height="380" viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="370" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
         <text x="250" y="25" text-anchor="middle" font-size="14" fill="#991b1b" font-weight="bold">📝 تمرين 38: log₂((3x+2)/∛(1-5x))</text>
         <rect x="20" y="45" width="460" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
         <text x="250" y="65" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">Step 1: Quotient Rule</text>
@@ -367,29 +381,35 @@ const svgGraphs = {
         <rect x="20" y="175" width="460" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
         <text x="250" y="195" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">Note: 3x+2 cannot be split (not a product)</text>
         <text x="250" y="212" text-anchor="middle" font-size="10" fill="#991b1b">log₂(3x+2) stays as is (sum inside log)</text>
-        <rect x="20" y="235" width="460" height="55" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <rect x="20" y="235" width="460" height="50" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
         <text x="250" y="255" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Final Answer:</text>
         <text x="250" y="275" text-anchor="middle" font-size="11" fill="#92400e" font-family="'Amiri', serif">log₂(3x+2) - (1/3)log₂(1-5x)</text>
-        <text x="250" y="295" text-anchor="middle" font-size="10" fill="#92400e">Key: (3x+2) is a SUM, not a product - cannot expand further!</text>
+        <rect x="20" y="295" width="460" height="60" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="315" text-anchor="middle" font-size="10" fill="#92400e">Key: (3x+2) is a SUM, not a product - cannot expand further!</text>
+        <text x="250" y="332" text-anchor="middle" font-size="10" fill="#92400e">log(a+b) ≠ log(a) + log(b)</text>
+        <text x="250" y="349" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Only products and quotients can be expanded!</text>
     </svg>`,
     
-    expansion_order: `<svg class="svg-graph" width="450" height="300" viewBox="0 0 450 300" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="5" width="440" height="290" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📋 ترتيب التوسيع - Expansion Order</text>
-        <rect x="20" y="45" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="65" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">1. Quotient Rule (if division)</text>
-        <text x="220" y="82" text-anchor="middle" font-size="10" fill="#92400e">log(a/b) = log(a) - log(b)</text>
-        <rect x="20" y="100" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="120" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">2. Product Rule (if multiplication)</text>
-        <text x="220" y="137" text-anchor="middle" font-size="10" fill="#92400e">log(ab) = log(a) + log(b)</text>
-        <rect x="20" y="155" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="175" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">3. Power Rule (if exponent)</text>
-        <text x="220" y="192" text-anchor="middle" font-size="10" fill="#92400e">log(aⁿ) = n·log(a)</text>
-        <rect x="20" y="210" width="400" height="45" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="230" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">4. Root Rule (if radical)</text>
-        <text x="220" y="247" text-anchor="middle" font-size="10" fill="#92400e">log(ⁿ√a) = (1/n)·log(a)</text>
-        <rect x="20" y="265" width="400" height="25" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-        <text x="220" y="282" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Always work from outside to inside!</text>
+    expansion_steps: `<svg class="svg-graph" width="500" height="360" viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="350" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📋 خطوات التوسيع - Expansion Steps</text>
+        <rect x="20" y="45" width="450" height="50" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="245" y="65" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">1. Quotient Rule (if division)</text>
+        <text x="245" y="85" text-anchor="middle" font-size="10" fill="#92400e">log(a/b) = log(a) - log(b)</text>
+        <rect x="20" y="105" width="450" height="50" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="245" y="125" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">2. Product Rule (if multiplication)</text>
+        <text x="245" y="145" text-anchor="middle" font-size="10" fill="#92400e">log(ab) = log(a) + log(b)</text>
+        <rect x="20" y="165" width="450" height="50" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="245" y="185" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">3. Power Rule (if exponent)</text>
+        <text x="245" y="205" text-anchor="middle" font-size="10" fill="#92400e">log(aⁿ) = n·log(a)</text>
+        <rect x="20" y="225" width="450" height="50" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="245" y="245" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">4. Root Rule (if radical)</text>
+        <text x="245" y="265" text-anchor="middle" font-size="10" fill="#92400e">log(ⁿ√a) = (1/n)·log(a)</text>
+        <rect x="20" y="285" width="450" height="60" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="245" y="305" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Example: log(x²y/√z)</text>
+        <text x="245" y="325" text-anchor="middle" font-size="10" fill="#92400e">= log(x²y) - log(√z) [Quotient]</text>
+        <text x="245" y="340" text-anchor="middle" font-size="10" fill="#92400e">= log(x²) + log(y) - (1/2)log(z) [Product + Root + Power]</text>
+        <text x="245" y="355" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">= 2log(x) + log(y) - (1/2)log(z) [Final]</text>
     </svg>`
 };
 
@@ -402,7 +422,7 @@ const originalExamData = {
             questions: [
                 {
                     q: { ar: '<strong>تمرين 29:</strong> log₉(6x³y⁵z). ما الخطوة الأولى للتوسيع؟', en: '<strong>Exercise 29:</strong> log₉(6x³y⁵z). What is the first step to expand?' },
-                    svg: svgGraphs.example_29,
+                    svg: svgGraphs.exercise29,
                     options: [
                         { ar: 'تطبيق خاصية الضرب: فصل العوامل', en: 'Apply product rule: separate factors' },
                         { ar: 'تطبيق خاصية القسمة', en: 'Apply quotient rule' },
@@ -418,7 +438,7 @@ const originalExamData = {
                         { ar: '<span class="math-display">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</span>', en: '<span class="math-display">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</span>' },
                         { ar: '<span class="math-display">log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</span>', en: '<span class="math-display">log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</span>' },
                         { ar: '<span class="math-display">log₉(6) · 3log₉(x) · 5log₉(y) · log₉(z)</span>', en: '<span class="math-display">log₉(6) · 3log₉(x) · 5log₉(y) · log₉(z)</span>' },
-                        { ar: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>', en: '<'<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>' }
+                        { ar: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>', en: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>' }
                     ],
                     correct: 0,
                     answer: { ar: 'log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z) = log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)', en: 'log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)' }
@@ -450,7 +470,7 @@ const originalExamData = {
                     options: [
                         { ar: 'نعم: log₉(2) + log₉(3) لأن 6 = 2×3', en: 'Yes: log₉(2) + log₉(3) because 6 = 2×3' },
                         { ar: 'لا، 6 عدد أولي', en: 'No, 6 is prime' },
-                        { ar: 'نعم: 2log₉(3)', en: 'Yes: 2log₉(3)2log₉(3)' },
+                        { ar: 'نعم: 2log₉(3)', en: 'Yes: 2log₉(3)' },
                         { ar: 'نعم: log₉(6) = 6', en: 'Yes: log₉(6) = 6' }
                     ],
                     correct: 0,
@@ -460,14 +480,14 @@ const originalExamData = {
         },
         {
             id: 'sec2',
-            title: { ar: '🔹 القسم 2: تمرين 30 - ln(x⁷/√(x+2)) (Q6-Q10)', en: '🔹 Section 2: Exercise 30 - ln(x⁷/√(x+2)) (Q6-Q10)' },
+            title: { ar: '🔹 القسم 2: تمرين 30 - ln(x⁷/∛(x+2)) (Q6-Q10)', en: '🔹 Section 2: Exercise 30 - ln(x⁷/∛(x+2)) (Q6-Q10)' },
             questions: [
                 {
-                    q: { ar: '<strong>تمرين 30:</strong> ln(x⁷/√(x+2)). ما الخطوة الأولى؟', en: '<strong>Exercise 30:</strong> ln(x⁷/√(x+2)). What is the first step?' },
-                    svg: svgGraphs.example_30,
+                    q: { ar: '<strong>تمرين 30:</strong> ln(x⁷/∛(x+2)). ما الخطوة الأولى؟', en: '<strong>Exercise 30:</strong> ln(x⁷/∛(x+2)). What is the first step?' },
+                    svg: svgGraphs.exercise30,
                     options: [
-                        { ar: 'خاصية القسمة: ln(x⁷) - ln(√(x+2))', en: 'Quotient rule: ln(x⁷) - ln(√(x+2))' },
-                        { ar: 'خاصية الضرب', en: 'Product rule' },
+                        { ar: 'خاصية القسمة: ln(x⁷) - ln(∛(x+2))', en: 'Quotient rule: ln(x⁷) - ln(∛(x+2))' },
+                        { ar: 'خاصية الضرب مباشرة', en: 'Product rule directly' },
                         { ar: 'خاصية القوة مباشرة', en: 'Power rule directly' },
                         { ar: 'خاصية الجذر مباشرة', en: 'Root rule directly' }
                     ],
@@ -486,26 +506,26 @@ const originalExamData = {
                     answer: { ar: 'باستخدام خاصية القوة: ln(x⁷) = 7ln(x)', en: 'Using power rule: ln(x⁷) = 7ln(x)' }
                 },
                 {
-                    q: { ar: '<strong>تمرين 30:</strong> ما توسيع ln(√(x+2))؟', en: '<strong>Exercise 30:</strong> What is the expansion of ln(√(x+2))?' },
+                    q: { ar: '<strong>تمرين 30:</strong> ما توسيع ln(∛(x+2))؟', en: '<strong>Exercise 30:</strong> What is the expansion of ln(∛(x+2))?' },
                     options: [
-                        { ar: '<span class="math-display">(1/2)ln(x+2)</span>', en: '<span class="math-display">(1/2)ln(x+2)</span>' },
-                        { ar: '<span class="math-display">ln(x+2)/2</span> (نفس الإجابة)', en: '<span class="math-display">ln(x+2)/2</span> (same answer)' },
-                        { ar: '<span class="math-display">2ln(x+2)</span>', en: '<span class="math-display">2ln(x+2)</span>' },
+                        { ar: '<span class="math-display">(1/3)ln(x+2)</span>', en: '<span class="math-display">(1/3)ln(x+2)</span>' },
+                        { ar: '<span class="math-display">3ln(x+2)</span>', en: '<span class="math-display">3ln(x+2)</span>' },
+                        { ar: '<span class="math-display">ln(x+2)/3</span>', en: '<span class="math-display">ln(x+2)/3</span>' },
                         { ar: '<span class="math-display">ln(x) + ln(2)</span>', en: '<span class="math-display">ln(x) + ln(2)</span>' }
                     ],
                     correct: 0,
-                    answer: { ar: '√(x+2) = (x+2)^(1/2)، إذن ln(√(x+2)) = (1/2)ln(x+2)', en: '√(x+2) = (x+2)^(1/2), so ln(√(x+2)) = (1/2)ln(x+2)' }
+                    answer: { ar: '∛(x+2) = (x+2)^(1/3)، إذن ln(∛(x+2)) = (1/3)ln(x+2)', en: '∛(x+2) = (x+2)^(1/3), so ln(∛(x+2)) = (1/3)ln(x+2)' }
                 },
                 {
                     q: { ar: '<strong>تمرين 30:</strong> ما التوسيع النهائي الصحيح؟', en: '<strong>Exercise 30:</strong> What is the correct final expansion?' },
                     options: [
-                        { ar: '<span class="math-display">7ln(x) - (1/2)ln(x+2)</span>', en: '<span class="math-display">7ln(x) - (1/2)ln(x+2)</span>' },
-                        { ar: '<span class="math-display">7ln(x) + (1/2)ln(x+2)</span>', en: '<span class="math-display">7ln(x) + (1/2)ln(x+2)</span>' },
+                        { ar: '<span class="math-display">7ln(x) - (1/3)ln(x+2)</span>', en: '<span class="math-display">7ln(x) - (1/3)ln(x+2)</span>' },
+                        { ar: '<span class="math-display">7ln(x) + (1/3)ln(x+2)</span>', en: '<span class="math-display">7ln(x) + (1/3)ln(x+2)</span>' },
                         { ar: '<span class="math-display">ln(x⁷) - ln(x+2)</span>', en: '<span class="math-display">ln(x⁷) - ln(x+2)</span>' },
-                        { ar: '<span class="math-display">7ln(x) - 2ln(x+2)</span>', en: '<span class="math-display">7ln(x) - 2ln(x+2)</span>' }
+                        { ar: '<span class="math-display">7ln(x) - 3ln(x+2)</span>', en: '<span class="math-display">7ln(x) - 3ln(x+2)</span>' }
                     ],
                     correct: 0,
-                    answer: { ar: '7ln(x) - (1/2)ln(x+2)', en: '7ln(x) - (1/2)ln(x+2)' }
+                    answer: { ar: '7ln(x) - (1/3)ln(x+2)', en: '7ln(x) - (1/3)ln(x+2)' }
                 },
                 {
                     q: { ar: '<strong>س10:</strong> لماذا لا يمكننا توسيع ln(x+2) أكثر؟', en: '<strong>Q10:</strong> Why can\'t we expand ln(x+2) further?' },
@@ -526,7 +546,7 @@ const originalExamData = {
             questions: [
                 {
                     q: { ar: '<strong>تمرين 31:</strong> log₃(p²q/∛(3q-1)). ما التوسيع الصحيح؟', en: '<strong>Exercise 31:</strong> log₃(p²q/∛(3q-1)). What is the correct expansion?' },
-                    svg: svgGraphs.example_31,
+                    svg: svgGraphs.exercise31,
                     options: [
                         { ar: '<span class="math-display">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</span>', en: '<span class="math-display">2log₃(p) + log₃(q) - (1/3)log₃(3q-1)</span>' },
                         { ar: '<span class="math-display">2log₃(p) + log₃(q) - 3log₃(3q-1)</span>', en: '<span class="math-display">2log₃(p) + log₃(q) - 3log₃(3q-1)</span>' },
@@ -537,15 +557,15 @@ const originalExamData = {
                     answer: { ar: 'log₃(p²) + log₃(q) - log₃(∛(3q-1)) = 2log₃(p) + log₃(q) - (1/3)log₃(3q-1)', en: 'log₃(p²) + log₃(q) - log₃(∛(3q-1)) = 2log₃(p) + log₃(q) - (1/3)log₃(3q-1)' }
                 },
                 {
-                    q: { ar: '<strong>تمرين 32:</strong> ln(4df⁵/√(1-3d)). ما التوسيع الصحيح؟', en: '<strong>Exercise 32:</strong> ln(4df⁵/√(1-3d)). What is the correct expansion?' },
+                    q: { ar: '<strong>تمرين 32:</strong> ln(4df⁵/∛(1-3d)). ما التوسيع الصحيح؟', en: '<strong>Exercise 32:</strong> ln(4df⁵/∛(1-3d)). What is the correct expansion?' },
                     options: [
-                        { ar: '<span class="math-display">ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)</span>', en: '<span class="math-display">ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)</span>' },
-                        { ar: '<span class="math-display">ln(4) + ln(d) + 5ln(f) + (1/2)ln(1-3d)</span>', en: '<span class="math-display">ln(4) + ln(d) + 5ln(f) + (1/2)ln(1-3d)</span>' },
+                        { ar: '<span class="math-display">ln(4) + ln(d) + 5ln(f) - (1/3)ln(1-3d)</span>', en: '<span class="math-display">ln(4) + ln(d) + 5ln(f) - (1/3)ln(1-3d)</span>' },
+                        { ar: '<span class="math-display">ln(4) + ln(d) + 5ln(f) + (1/3)ln(1-3d)</span>', en: '<span class="math-display">ln(4) + ln(d) + 5ln(f) + (1/3)ln(1-3d)</span>' },
                         { ar: '<span class="math-display">ln(4df⁵) - ln(1-3d)</span>', en: '<span class="math-display">ln(4df⁵) - ln(1-3d)</span>' },
-                        { ar: '<span class="math-display">4ln(d) + 5ln(f) - 2ln(1-3d)</span>', en: '<span class="math-display">4ln(d) + 5ln(f) - 2ln(1-3d)</span>' }
+                        { ar: '<span class="math-display">4ln(d) + 5ln(f) - 3ln(1-3d)</span>', en: '<span class="math-display">4ln(d) + 5ln(f) - 3ln(1-3d)</span>' }
                     ],
                     correct: 0,
-                    answer: { ar: 'ln(4) + ln(d) + ln(f⁵) - ln(√(1-3d)) = ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)', en: 'ln(4) + ln(d) + 5ln(f) - (1/2)ln(1-3d)' }
+                    answer: { ar: 'ln(4) + ln(d) + ln(f⁵) - ln(∛(1-3d)) = ln(4) + ln(d) + 5ln(f) - (1/3)ln(1-3d)', en: 'ln(4) + ln(d) + 5ln(f) - (1/3)ln(1-3d)' }
                 },
                 {
                     q: { ar: '<strong>تمرين 33:</strong> log₁₁(ab⁻⁴c¹²d⁷). ما التوسيع الصحيح؟', en: '<strong>Exercise 33:</strong> log₁₁(ab⁻⁴c¹²d⁷). What is the correct expansion?' },
@@ -650,7 +670,7 @@ const originalExamData = {
             questions: [
                 {
                     q: { ar: '<strong>تمرين 37:</strong> ln(3a⁴b⁷c/√(b-9)). ما الخطوة الأولى؟', en: '<strong>Exercise 37:</strong> ln(3a⁴b⁷c/√(b-9)). What is the first step?' },
-                    svg: svgGraphs.example_37,
+                    svg: svgGraphs.exercise37,
                     options: [
                         { ar: 'خاصية القسمة: ln(3a⁴b⁷c) - ln(√(b-9))', en: 'Quotient rule: ln(3a⁴b⁷c) - ln(√(b-9))' },
                         { ar: 'خاصية الضرب مباشرة', en: 'Product rule directly' },
@@ -666,7 +686,7 @@ const originalExamData = {
                         { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c)</span>' },
                         { ar: '<span class="math-display">ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</span>', en: '<span class="math-display">ln(3) + ln(a⁴) + ln(b⁷) + ln(c)</span>' },
                         { ar: '<span class="math-display">3ln(a⁴b⁷c)</span>', en: '<span class="math-display">3ln(a⁴b⁷c)</span>' },
-                        { ar: '<span class="math-display">ln(3) · 4ln(a) · 7ln(b) · ln(c)</span>', en: '<span class="math-display">ln(3) · 4ln(a) · 7ln(b) · ln(c)</span>' }
+                        { ar: '<span class="math-display">ln(3) · 4ln(a) · 7ln(b) · ln(c)</span>', en: '<span class="math-display">ln(3) · 4ln(a) · 7log₅(b) · ln(c)</span>' }
                     ],
                     correct: 0,
                     answer: { ar: 'ln(3) + ln(a⁴) + ln(b⁷) + ln(c) = ln(3) + 4ln(a) + 7ln(b) + ln(c)', en: 'ln(3) + 4ln(a) + 7ln(b) + ln(c)' }
@@ -685,7 +705,7 @@ const originalExamData = {
                 {
                     q: { ar: '<strong>تمرين 37:</strong> ما التوسيع النهائي الكامل؟', en: '<strong>Exercise 37:</strong> What is the complete final expansion?' },
                     options: [
-                        { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</span>' },
+                        { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - (1/2)ln(b-9)</</span>' },
                         { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) + (1/2)ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) + (1/2)ln(b-9)</span>' },
                         { ar: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - 2ln(b-9)</span>', en: '<span class="math-display">ln(3) + 4ln(a) + 7ln(b) + ln(c) - 2ln(b-9)</span>' },
                         { ar: '<span class="math-display">3 + 4a + 7b + c - (1/2)(b-9)</span>', en: '<span class="math-display">3 + 4a + 7b + c - (1/2)(b-9)</span>' }
@@ -712,7 +732,7 @@ const originalExamData = {
             questions: [
                 {
                     q: { ar: '<strong>تمرين 38:</strong> log₂((3x+2)/∛(1-5x)). ما التوسيع الصحيح؟', en: '<strong>Exercise 38:</strong> log₂((3x+2)/∛(1-5x)). What is the correct expansion?' },
-                    svg: svgGraphs.example_38,
+                    svg: svgGraphs.exercise38,
                     options: [
                         { ar: '<span class="math-display">log₂(3x+2) - (1/3)log₂(1-5x)</span>', en: '<span class="math-display">log₂(3x+2) - (1/3)log₂(1-5x)</span>' },
                         { ar: '<span class="math-display">log₂(3x+2) - 3log₂(1-5x)</span>', en: '<span class="math-display">log₂(3x+2) - 3log₂(1-5x)</span>' },
@@ -741,8 +761,7 @@ const originalExamData = {
                         { ar: '<span class="math-display">5log(x²y³)</span>', en: '<span class="math-display">5log(x²y³)</span>' },
                         { ar: '<span class="math-display">log(5) · 2log(x) · 3log(y)</span>', en: '<span class="math-display">log(5) · 2log(x) · 3log(y)</span>' }
                     ],
-                    correct: 0,
-                    answer: { ar: 'log(5) + log(x²) + log(y³) = log(5) + 2log(x) + 3log(y)', en: 'log(5) + 2log(x) + 3log(y)' }
+                    correct: 0, answer: { ar: 'log(5) + log(x²) + log(y³) = log(5) + 2log(x) + 3log(y)', en: 'log(5) + 2log(x) + 3log(y)' }
                 },
                 {
                     q: { ar: '<strong>س29:</strong> log((x²-1)/(x+3)). ما التوسيع الصحيح؟', en: '<strong>Q29:</strong> log((x²-1)/(x+3)). What is the correct expansion?' },
@@ -758,7 +777,7 @@ const originalExamData = {
                 {
                     q: { ar: '<strong>س30:</strong> ln(√(x³y)). ما التوسيع الصحيح؟', en: '<strong>Q30:</strong> ln(√(x³y)). What is the correct expansion?' },
                     options: [
-                        { ar: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>', en: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</</span>' },
+                        { ar: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>', en: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>' },
                         { ar: '<span class="math-display">3ln(x) + ln(y)</span>', en: '<span class="math-display">3ln(x) + ln(y)</span>' },
                         { ar: '<span class="math-display">(1/2)ln(x³) + (1/2)ln(y)</span>', en: '<span class="math-display">(1/2)ln(x³) + (1/2)ln(y)</span>' },
                         { ar: '<span class="math-display">ln(x³) + ln(y)</span>', en: '<span class="math-display">ln(x³) + ln(y)</span>' }
@@ -1028,7 +1047,7 @@ function sendResultsToEmail() {
             }
             const cat = q.options[q.correct][currentLang];
             const rb = ic ? '#f0fdf4' : '#fef2f2';
-            questionsHTML += '<tr style="background:' + rb + ';"><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (globalIdx+1) + '</td><td style="padding:8px; border:1px solid #ddd;">' + q.q.ar + '</td><td style="padding:8px; border:1px solid #ddd; color:' + sac + ';">' + sat + '</td><td style="padding:8px; border:1px solid #ddd; color:#16a34a;">' + cat + '</td><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (ic?'✅':'❌') + '</td></tr>';
+            questionsHTML += '<tr style="background:' + rb + ';"><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (globalIdx+1) + '</td><td style="padding:8px; border:1px solid #ddd;">' + q.q.ar.replace(/<[^>]+>/g, '').substring(0, 80) + '...</td><td style="padding:8px; border:1px solid #ddd; color:' + sac + ';">' + sat + '</td><td style="padding:8px; border:1px solid #ddd; color:#16a34a;">' + cat + '</td><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (ic?'✅':'❌') + '</td></tr>';
             globalIdx++;
         });
     });
