@@ -43,6 +43,15 @@ body.en-mode .save-indicator { left: auto; right: 20px; }
 .module-4 { background: #ecfdf5; color: #065f46; }
 .module-5 { background: #ede9fe; color: #5b21b6; }
 .module-6 { background: #fee2e2; color: #991b1b; }
+.question-card { background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s; }
+.question-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+.solution-box { display: none; background: #f0fdf4; border: 2px solid #16a34a; border-radius: 8px; padding: 15px; margin-top: 15px; animation: slideDown 0.3s ease-out; }
+.solution-box.show { display: block; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+.check-btn { background: #16a34a; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-right: 5px; transition: all 0.3s; }
+.check-btn:hover { background: #15803d; transform: translateY(-1px); }
+.show-answer-btn { background: #d97706; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+.show-answer-btn:hover { background: #b45309; transform: translateY(-1px); }
 </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen">
@@ -63,7 +72,7 @@ body.en-mode .save-indicator { left: auto; right: 20px; }
 </div>
 
 <div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
-<button onclick="toggleAnswers()" class="bg-amber-700 hover:bg-amber-800 text-white px-5 py-2 rounded-xl font-medium transition shadow">👀 <span data-ar="إظهار/إخفاء الإجابات" data-en="Show/Hide Answers">إظهار/إخفاء الإجابات</span></button>
+<button onclick="toggleAnswers()" class="bg-amber-700 hover:bg-amber-800 text-white px-5 py-2 rounded-xl font-medium transition shadow">👀 <span data-ar="إظهار/إخفاء كل الإجابات" data-en="Show/Hide All Answers">إظهار/إخفاء كل الإجابات</span></button>
 <button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow">🖨️ <span data-ar="طباعة" data-en="Print">طباعة</span></button>
 <button onclick="reshuffleExam()" class="bg-gradient-to-r from-amber-700 to-orange-600 hover:from-amber-800 hover:to-orange-700 text-white px-5 py-2 rounded-xl font-medium transition shadow">🔄 <span data-ar="أسئلة جديدة" data-en="New Questions">أسئلة جديدة</span></button>
 <button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow">🗑️ <span data-ar="مسح التقدم" data-en="Clear Progress">مسح التقدم</span></button>
@@ -155,7 +164,7 @@ const TEMPLATE_ID = "template_5b0u2tq";
 const TARGET_EMAIL = "mohammedhesham872@gmail.com";
 emailjs.init(PUBLIC_KEY);
 
-const STORAGE_KEY = 'log_properties_grade11_v1';
+const STORAGE_KEY = 'log_properties_grade11_v2';
 const TOTAL_TIME = 4500;
 const TOTAL_QUESTIONS = 30;
 const TOTAL_SECTIONS = 6;
@@ -248,7 +257,7 @@ function setupInputListeners() {
     });
 }
 
-// ==================== SVG DIAGRAMS - ACCURATE LOG PROPERTIES VISUALS ====================
+// ==================== SVG DIAGRAMS ====================
 const svgGraphs = {
     log_properties: `<svg class="svg-graph" width="450" height="300" viewBox="0 0 450 300" xmlns="http://www.w3.org/2000/svg">
         <rect x="5" y="5" width="440" height="290" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
@@ -409,7 +418,7 @@ const originalExamData = {
                         { ar: '<span class="math-display">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</span>', en: '<span class="math-display">log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)</span>' },
                         { ar: '<span class="math-display">log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</span>', en: '<span class="math-display">log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z)</span>' },
                         { ar: '<span class="math-display">log₉(6) · 3log₉(x) · 5log₉(y) · log₉(z)</span>', en: '<span class="math-display">log₉(6) · 3log₉(x) · 5log₉(y) · log₉(z)</span>' },
-                        { ar: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>', en: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>' }
+                        { ar: '<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>', en: '<'<span class="math-display">log₉(6x³) + log₉(y⁵z)</span>' }
                     ],
                     correct: 0,
                     answer: { ar: 'log₉(6) + log₉(x³) + log₉(y⁵) + log₉(z) = log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)', en: 'log₉(6) + 3log₉(x) + 5log₉(y) + log₉(z)' }
@@ -441,7 +450,7 @@ const originalExamData = {
                     options: [
                         { ar: 'نعم: log₉(2) + log₉(3) لأن 6 = 2×3', en: 'Yes: log₉(2) + log₉(3) because 6 = 2×3' },
                         { ar: 'لا، 6 عدد أولي', en: 'No, 6 is prime' },
-                        { ar: 'نعم: 2log₉(3)', en: 'Yes: 2log₉(3)' },
+                        { ar: 'نعم: 2log₉(3)', en: 'Yes: 2log₉(3)2log₉(3)' },
                         { ar: 'نعم: log₉(6) = 6', en: 'Yes: log₉(6) = 6' }
                     ],
                     correct: 0,
@@ -749,7 +758,7 @@ const originalExamData = {
                 {
                     q: { ar: '<strong>س30:</strong> ln(√(x³y)). ما التوسيع الصحيح؟', en: '<strong>Q30:</strong> ln(√(x³y)). What is the correct expansion?' },
                     options: [
-                        { ar: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>', en: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>' },
+                        { ar: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</span>', en: '<span class="math-display">(3/2)ln(x) + (1/2)ln(y)</</span>' },
                         { ar: '<span class="math-display">3ln(x) + ln(y)</span>', en: '<span class="math-display">3ln(x) + ln(y)</span>' },
                         { ar: '<span class="math-display">(1/2)ln(x³) + (1/2)ln(y)</span>', en: '<span class="math-display">(1/2)ln(x³) + (1/2)ln(y)</span>' },
                         { ar: '<span class="math-display">ln(x³) + ln(y)</span>', en: '<span class="math-display">ln(x³) + ln(y)</span>' }
@@ -829,28 +838,38 @@ function renderExam() {
         const badgeClass = ['module-1', 'module-2', 'module-3', 'module-4', 'module-5', 'module-6'][secIdx];
         html += '<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-amber-100">';
         html += '<div class="text-center mb-4"><span class="module-badge ' + badgeClass + '">' + section.title[currentLang] + '</span></div>';
-        html += '<ol class="space-y-4 text-sm">';
+        html += '<div class="space-y-4">';
         
         section.questions.forEach((q) => {
-            html += '<li class="border-r-4 border-amber-400 pr-4 py-2" id="q-' + globalIdx + '" style="border-right: 4px solid #d97706; padding-right: 1rem;">';
-            html += '<strong class="text-amber-700">' + (globalIdx + 1) + '.</strong> ' + q.q[currentLang] + '<br>';
+            html += '<div class="question-card" id="q-' + globalIdx + '">';
+            html += '<strong class="text-amber-700 text-lg">' + (currentLang === 'ar' ? 'السؤال ' : 'Question ') + (globalIdx + 1) + '</strong><br>';
+            html += '<div class="mt-2">' + q.q[currentLang] + '</div>';
             if (q.svg) html += '<div class="graph-container">' + q.svg + '</div>';
             
+            html += '<div class="mt-4 space-y-2">';
             q.options.forEach((opt, oIdx) => {
-                html += '<label class="cursor-pointer block mt-2 mr-4 hover:bg-amber-50 rounded-lg p-2 transition" style="margin-right: 1rem;">';
+                html += '<label class="cursor-pointer block hover:bg-amber-50 rounded-lg p-3 transition border border-gray-200">';
                 html += '<input type="radio" name="q' + globalIdx + '" value="' + String.fromCharCode(97 + oIdx) + '" class="mr-2 ml-2">';
                 html += '<span class="arabic-math">' + lbl.option[oIdx] + ') ' + opt[currentLang] + '</span>';
                 html += '</label>';
             });
+            html += '</div>';
             
-            html += '<div class="answer-box text-green-700 mt-3 font-medium ' + (answersVisible ? '' : 'hidden') + ' bg-green-50 rounded-lg p-3 border border-green-200">';
-            html += lbl.answer + ' ' + lbl.option[q.correct] + ') <span class="arabic-math">' + q.options[q.correct][currentLang] + '</span><br>';
+            html += '<div class="flex gap-2 mt-3">';
+            html += '<button onclick="checkAnswer(' + globalIdx + ')" class="check-btn">' + (currentLang === 'ar' ? '✓ تحقق' : '✓ Check') + '</button>';
+            html += '<button onclick="toggleSolution(' + globalIdx + ')" class="show-answer-btn">' + (currentLang === 'ar' ? '📖 أظهر الحل' : '📖 Show Solution') + '</button>';
+            html += '</div>';
+            
+            html += '<div id="solution-' + globalIdx + '" class="solution-box">';
+            html += '<strong class="text-green-700">' + lbl.answer + ' ' + lbl.option[q.correct] + ')</strong> ';
+            html += '<span class="arabic-math text-green-700">' + q.options[q.correct][currentLang] + '</span><br>';
             html += '<span class="text-sm text-green-700 mt-2 block arabic-math">' + q.answer[currentLang] + '</span>';
-            html += '</div></li>';
+            html += '</div>';
+            html += '</div>';
             globalIdx++;
         });
         
-        html += '</ol></section>';
+        html += '</div></section>';
     });
     
     container.innerHTML = html;
@@ -879,8 +898,42 @@ function updateTimerDisplay() {
 
 function toggleAnswers() {
     answersVisible = !answersVisible;
-    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    document.querySelectorAll('.solution-box').forEach(el => {
+        if (answersVisible) {
+            el.classList.add('show');
+        } else {
+            el.classList.remove('show');
+        }
+    });
     saveState(false);
+}
+
+function checkAnswer(qId) {
+    const sel = document.querySelector('input[name="q'+qId+'"]:checked');
+    
+    if (!sel) {
+        alert(currentLang === 'ar' ? '⚠️ الرجاء اختيار إجابة أولاً' : '⚠️ Please select an answer first');
+        return;
+    }
+    
+    const isCorrect = sel.value === correctAnswersMap[qId];
+    const card = document.getElementById('q-' + qId);
+    card.classList.remove('correct', 'incorrect');
+    card.classList.add(isCorrect ? 'correct' : 'incorrect');
+    
+    const solution = document.getElementById('solution-' + qId);
+    solution.classList.add('show');
+    
+    if (isCorrect) {
+        alert(currentLang === 'ar' ? '✅ إجابة صحيحة! أحسنت!' : '✅ Correct answer! Well done!');
+    } else {
+        alert(currentLang === 'ar' ? '❌ إجابة غير صحيحة. راجع الحل.' : '❌ Incorrect answer. Check the solution.');
+    }
+}
+
+function toggleSolution(qId) {
+    const solution = document.getElementById('solution-' + qId);
+    solution.classList.toggle('show');
 }
 
 function gradeExam() {
@@ -889,17 +942,17 @@ function gradeExam() {
     
     for (let i = 0; i < TOTAL_QUESTIONS; i++) {
         const sel = document.querySelector('input[name="q'+i+'"]:checked');
-        const li = document.getElementById('q-' + i);
-        if (li) {
+        const card = document.getElementById('q-' + i);
+        if (card) {
             const isCorrect = sel && sel.value === correctAnswersMap[i];
             if (isCorrect) {
                 correctCount++;
-                li.classList.add('correct');
-                li.classList.remove('incorrect');
+                card.classList.add('correct');
+                card.classList.remove('incorrect');
                 sectionScores[Math.floor(i / QUESTIONS_PER_SECTION)]++;
             } else {
-                li.classList.add('incorrect');
-                li.classList.remove('correct');
+                card.classList.add('incorrect');
+                card.classList.remove('correct');
             }
         }
     }
